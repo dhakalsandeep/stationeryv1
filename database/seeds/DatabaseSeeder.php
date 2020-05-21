@@ -13,6 +13,9 @@ class DatabaseSeeder extends Seeder
             UsersTableSeeder::class,
             CompanyInfosTableSeeder::class,
             RoleUserTableSeeder::class,
+            DepartmentsTableSeeder::class,
+            ItemsTypesTableSeeder::class,
+            FiscalYearsTableSeeder::class,
         ]);
     }
 }

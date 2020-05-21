@@ -63,4 +63,26 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Role::class);
     }
+
+    public function items()
+    {
+        return $this->hasMany(Item::class)->orderBy('created_at','desc');
+    }
+
+    public function publisher(){
+        return $this->hasMany(Publisher::class)->orderBy('created_at','desc');
+    }
+
+    public function suppliers(){
+        return $this->hasMany(Supplier::class)->orderBy('created_at','desc');
+    }
+
+    public function purchase_master(){
+        return $this->hasMany(PurchaseMaster::class);
+    }
+
+    public function company_info()
+    {
+        return $this->belongsTo(CompanyInfo::class,'company_infos_id','id');
+    }
 }

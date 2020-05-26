@@ -35,7 +35,7 @@
                             {{ trans('global.user.fields.roles') }}
                         </th>
                         <th>
-                            &nbsp;
+                            &nbsp{{ trans('global.action') }}
                         </th>
                     </tr>
                 </thead>

@@ -311,7 +311,7 @@ return [
     'deselect_all'                         => 'Deselect all',
     'team-management'                      => 'Teams',
     'team-management-singular'             => 'Team',
-    'site_title'                           => 'Laravel + CoreUI',
+    'site_title'                           => 'SIMS',
     'userManagement'                       => [
         'title'          => 'User Management',
         'title_singular' => 'User Management',
@@ -352,5 +352,26 @@ return [
             'deleted_at'         => 'Deleted at',
             'deleted_at_helper'  => '',
         ],
+    ],
+    'action' => 'Action',
+    'publisher' => [
+        'title_singular'    => 'Publisher',
+        'title_plural'    => 'Publishers',
+    ],
+    'supplier' => [
+        'title_singular'    => 'Supplier',
+        'title_plural'    => 'Suppliers',
+    ],
+    'item' => [
+        'title_singular'    => 'Item',
+        'title_plural'    => 'Items',
+    ],
+    'issue' => [
+        'title_singular'    => 'Issue',
+        'title_plural'    => 'Issues',
+    ],
+    'purchase' => [
+        'title_singular'    => 'Purchase',
+        'title_plural'    => 'Purchases',
     ],
 ];

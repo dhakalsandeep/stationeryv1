@@ -1,9 +1,9 @@
-@extends('layouts.app2')
+@extends('layouts.admin')
 @section('page_header')
     Purchases
 @stop
 @section('content')
-<div class="container">
+<div class="container-fluid">
     <form action="{{route('purchase.store')}}" enctype="multipart/form-data" method="post">
         @csrf
         <div class="row">
@@ -12,8 +12,8 @@
                 <input id="fiscal_year"
                        name="fiscal_year"
                        type="text"
-                       class="col-2 pl-2 font-weight-bold"
-                       style="margin-left: 5px"
+                       class="pl-2 font-weight-bold text-center"
+                       style="width: 80px;"
                        value="{{ $fiscal_year->fiscal_year }}"
                        readonly
                        autocomplete="fiscal_year" autofocus>
@@ -335,7 +335,7 @@
         </div>
     </form>
 </div>
-@endsection
+
 
 @section('scripts')
 <script>
@@ -439,7 +439,7 @@
     var currentDate = new Date();
     var currentNepaliDate = calendarFunctions.getBsDateByAdDate(currentDate.getFullYear(), currentDate.getMonth() + 1, currentDate.getDate());
     var formatedNepaliDate = calendarFunctions.bsDateFormat("%y-%m-%d", currentNepaliDate.bsYear, currentNepaliDate.bsMonth, currentNepaliDate.bsDate);
-    //console.log(formatedNepaliDate);
+    console.log(formatedNepaliDate);
     $("#supplier_bill_date").val(formatedNepaliDate);
 </script>
 
@@ -455,8 +455,5 @@
     //console.log(formatedNepaliDate);
     $("#received_date").val(formatedNepaliDate);
 </script>
-
-
-
-
 @stop
+@endsection

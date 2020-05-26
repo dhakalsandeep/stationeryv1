@@ -1,4 +1,4 @@
-@extends('layouts.app2')
+@extends('layouts.admin')
 @section('page_header')
     Set Stock Room and Rack
 @stop
@@ -224,7 +224,7 @@
                 <div class="form-group row col-1 add-detail-btn-wrapper" style="width: 100%;">
                     <button class="btn btn-primary btn-xs" id="addDetail"><i class="fa fa-plus"></i> </button>
                 </div>
-                
+
                 <!-- <div class="item clearfix" id="income-0">
                             <div class="item__description">Salary</div>
                             <div class="right clearfix">

@@ -1,4 +1,4 @@
-@extends('layouts.app2')
+@extends('layouts.admin')
 @section('page_header')
     Set Stock Room and Rack
 @stop

@@ -28,10 +28,10 @@
     <header class="app-header navbar">
         <button class="navbar-toggler sidebar-toggler d-lg-none mr-auto" type="button" data-toggle="sidebar-show">
             <span class="navbar-toggler-icon"></span>
-        </button>app-header
+        </button>
         <a class="navbar-brand" href="#">
-            <span class="navbar-brand-full">Project</span>
-            <span class="navbar-brand-minimized">P</span>
+            <span class="navbar-brand-full">{{ trans('global.site_title') }}</span>
+            <span class="navbar-brand-minimized">SIMS</span>
         </a>
         <button class="navbar-toggler sidebar-toggler d-md-down-none" type="button" data-toggle="sidebar-lg-show">
             <span class="navbar-toggler-icon"></span>
@@ -57,8 +57,20 @@
         @include('partials.menu')
         <main class="main">
 
+            <!-- Content Header (Page header) -->
+            <div class="content-header">
+                <div class="container-fluid">
+                    <div class="row mb-2">
+                        <div class="col-sm-6">
+                            <h1 class="m-0 text-dark">@yield('page_header')</h1>
+                        </div><!-- /.col -->
 
-            <div style="padding-top: 20px" class="container-fluid">
+                    </div><!-- /.row -->
+                </div><!-- /.container-fluid -->
+            </div>
+            <!-- /.content-header -->
+
+            <div class="container-fluid">
 
                 @yield('content')
 

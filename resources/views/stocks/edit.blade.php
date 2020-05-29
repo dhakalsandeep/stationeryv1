@@ -1,4 +1,9 @@
 @extends('layouts.admin')
+@section('styles')
+    <style>
+        .table th,td { padding: 2px;}
+    </style>
+@stop
 @section('page_header')
     Set Stock Room and Rack
 @stop
@@ -80,161 +85,123 @@
                     @enderror
                 </div>
 
-                @if($details->count() > 0)
-                    @foreach($details as $index => $detail)
-                        <div class="col-12 d-flex stock-detail">
-
-                            <div class="form-group row">
-                                @if($index==0)
-                                    <label for="room_no" class="col-4 col-form-label">Room No</label>
-                                @endif
-                                <input id="room_no"
-                                       name="room_no[]"
-                                       type="text"
-                                       class="form-control
-                                        @error('room_no') is-invalid
+                <div class="row">
+                    <table class="table table-borderless">
+{{--                        <thead>--}}
+{{--                        <tr class="text-center">--}}
+{{--                            <th>Room No</th>--}}
+{{--                            <th>Rack No</th>--}}
+{{--                            <th>Qty</th>--}}
+{{--                            <th></th>--}}
+{{--                        </tr>--}}
+{{--                        </thead>--}}
+                        <tbody>
+                            <tr>
+                                <td><input id="input_room_no"
+                                           name="input_room_no"
+                                           type="text"
+                                           class="form-control
+                                        @error('input_room_no') is-invalid
                                          @enderror"
-                                       value="{{$detail->room_no}}"
-                                       style= "margin-right: 30px;"
-                                       autocomplete="room_no" autofocus>
-                                @error('room_no')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                                @enderror
-                            </div>
-
-                            <div class="form-group row">
-                                @if($index == 0)
-                                <label for="rack_no" class="col-4 col-form-label">Rack No</label>
-                                @endif
-                                <input id="rack_no"
-                                       name="rack_no[]"
-                                       type="text"
-                                       class="form-control
-                                        @error('rack_no') is-invalid
+                                           value=""
+                                           autocomplete="room_no" autofocus>
+                                </td>
+                                <td><input id="input_rack_no"
+                                           name="input_rack_no"
+                                           type="text"
+                                           class="form-control
+                                        @error('input_rack_no') is-invalid
                                          @enderror"
-                                       value="{{$detail->rack_no}}"
-                                       style= "margin-right: 38px;"
-                                       autocomplete="rack_no" autofocus>
-                                @error('rack_no')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                                @enderror
-                            </div>
-
-                            <div class="form-group row">
-                                @if($index==0)
-                                <label for="rack_qty" class="col-3 col-form-label">Qty</label>
-                                @endif
-                                <input id="rack_qty"
-                                       name="rack_qty[]"
-                                       type="number"
-                                       class="form-control
-                                        @error('rack_qty') is-invalid
+                                           value=""
+                                           autocomplete="room_no" autofocus>
+                                </td>
+                                <td><input id="input_rack_qty"
+                                           name="input_rack_qty"
+                                           type="text"
+                                           class="form-control
+                                        @error('input_rack_qty') is-invalid
                                          @enderror"
-                                       value="{{ $detail->qty }}"
-                                       autocomplete="rack_qty" autofocus>
-                                @error('rack_qty')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                                @enderror
-                            </div>
-
-                            <div class="form-group row">
-                                <button class="btn btn-danger btn-xs" id="removeDetail" style="height: 26px;
-                            position: absolute;
-                            margin-left: 25px;
-                            margin-top: 43px;
-                            width: 27px;"><i class="fa fa-times"></i></button>
-                            </div>
-                        </div>
-                    @endforeach
-                @else
-                    <div class="col-12 d-flex stock-detail">
-                        <div class="form-group row">
-                            <label for="room_no" class="col-4 col-form-label">Room No</label>
-                            <input id="room_no"
-                                   name="room_no[]"
-                                   type="text"
-                                   class="form-control
-                                    @error('room_no') is-invalid
-                                     @enderror"
-                                   value="{{$stock->room_no}}"
-                                   style= "margin-right: 30px;"
-                                   autocomplete="room_no" autofocus>
-                            @error('room_no')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                            @enderror
-                        </div>
-
-                        <div class="form-group row">
-                                <label for="rack_no" class="col-4 col-form-label">Rack No</label>
-                                <input id="rack_no"
-                                       name="rack_no[]"
-                                       type="text"
-                                       class="form-control
-                                    @error('rack_no') is-invalid
-                                     @enderror"
-                                       value="{{$stock->rack_no}}"
-                                       style= "margin-right: 38px;"
-                                       autocomplete="rack_no" autofocus>
-                                @error('rack_no')
-                                <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                                @enderror
-                        </div>
-
-                        <div class="form-group row">
-                            <label for="rack_qty" class="col-3 col-form-label">Qty</label>
-                            <input id="rack_qty"
-                                   name="rack_qty[]"
-                                   type="number"
-                                   class="form-control
-                                    @error('rack_qty') is-invalid
-                                     @enderror"
-                                   value="{{ 0 }}"
-                                   autocomplete="rack_qty" autofocus>
-                            @error('rack_qty')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                            @enderror
-                        </div>
-
-                        <div class="form-group row">
-                            <button class="btn btn-danger btn-xs" id="removeDetail" style="height: 26px;
-                        position: absolute;
-                        margin-left: 25px;
-                        margin-top: 43px;
-                        width: 27px;"><i class="fa fa-times"></i></button>
-                        </div>
-
-                    </div>
-                @endif
-
-
-
-
-                <div class="form-group row col-1 add-detail-btn-wrapper" style="width: 100%;">
-                    <button class="btn btn-primary btn-xs" id="addDetail"><i class="fa fa-plus"></i> </button>
+                                           value=""
+                                           autocomplete="room_no" autofocus>
+                                </td>
+                                <td><button class="btn btn-primary btn-xs" style="margin-top: 7px;" id="addDetail"><i class="fa fa-plus"></i> </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
 
-                <!-- <div class="item clearfix" id="income-0">
-                            <div class="item__description">Salary</div>
-                            <div class="right clearfix">
-                                <div class="item__value">+ 2,100.00</div>
-                                <div class="item__delete">
-                                    <button class="item__delete--btn"><i class="ion-ios-close-outline"></i></button>
-                                </div>
-                            </div>
-                        </div> -->
+                <div class="row">
+                    <table class="table">
+                        <thead>
+                            <tr class="text-center">
+                                <th>Room No</th>
+                                <th>Rack No</th>
+                                <th>Qty</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        @if($details->count() > 0)
+                            @foreach($details as $index => $detail)
+                                <tr>
+                                    <td>
+                                        <input id="room_no"
+                                               name="room_no[]"
+                                               type="text"
+                                               class="form-control
+                                        @error('room_no') is-invalid
+                                         @enderror"
+                                               value="{{$detail->room_no}}"
+                                               autocomplete="room_no" autofocus>
+                                        @error('room_no')
+                                        <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                        </span>
+                                        @enderror
+                                    </td>
+                                    <td>
+                                        <input id="rack_no"
+                                               name="rack_no[]"
+                                               type="text"
+                                               class="form-control
+                                        @error('rack_no') is-invalid
+                                         @enderror"
+                                               value="{{$detail->rack_no}}"
+                                               style= "margin-right: 38px;"
+                                               autocomplete="rack_no" autofocus>
+                                        @error('rack_no')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                        @enderror
+                                    </td>
+                                    <td>
+                                        <input id="rack_qty"
+                                               name="rack_qty[]"
+                                               type="number"
+                                               class="form-control
+                                        @error('rack_qty') is-invalid
+                                         @enderror"
+                                               value="{{ $detail->qty }}"
+                                               autocomplete="rack_qty" autofocus>
+                                        @error('rack_qty')
+                                        <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                        </span>
+                                        @enderror
+                                    </td>
+                                    <td><button class="btn btn-danger btn-xs" id="removeDetail" style="margin-top: 7px;"><i class="fa fa-times"></i></button></td>
+                                </tr>
+                            @endforeach
+                        @endif
+                        </tbody>
+                    </table>
+                </div>
 
+{{--                <div class="form-group row col-1 add-detail-btn-wrapper" style="width: 100%;">--}}
+{{--                    <button class="btn btn-primary btn-xs" id="addDetail"><i class="fa fa-plus"></i> </button>--}}
+{{--                </div>--}}
 
                 <div class="form-group row pt-4 js--submit">
                     <button type="submit" class="btn btn-primary">Save</button>
@@ -253,6 +220,9 @@
         console.clear();
         $('#addDetail').click(function (e) {
             e.preventDefault();
+            let room_no = $('#input_room_no').val();
+            let rack_no = $('#input_rack_no').val();
+            let rack_qty = $('#input_rack_qty').val();
             let $stockDetail = $('.stock-detail').first().clone(true); // if you want to clone events also, add true in clone(true)
             // $stockDetail.find('label').remove();
             $stockDetail.find('input').val('');
@@ -261,8 +231,8 @@
         });
         $('#removeDetail').click(function (e) {
             e.preventDefault();
-            console.log("here");
             let $details = $('.stock-detail');
+            console.log($details);
             if($details.length > 1){
                 $(this).closest('.stock-detail').remove();
             }else{

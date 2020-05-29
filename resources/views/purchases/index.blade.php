@@ -18,10 +18,10 @@ Purchases
     <div class="card">
         <div class="card-body">
             <div class="table-responsive">
-                <table id="purchase--list" class="table table-bordered table-striped table-hover datatable">
+                <table class="table table-bordered table-striped table-hover datatable">
                     <thead>
                         <tr>
-                            <th style="display: none"></th>
+                            <th ></th>
                             <th class="text-center" width="22%">Supplier</th>
                             <th class="text-center" width="8%">Bill No</th>
                             <th class="text-center" width="8%">S Billdate</th>
@@ -60,7 +60,7 @@ Purchases
         </div>
     </div>
 </div>
-@section("script")
+@section("scripts")
     <script>
         $(function () {
             let dtButtons = [];
@@ -68,5 +68,5 @@ Purchases
             $('.select-checkbox').css('display','none');
         })
     </script>
-@stop
+@endsection
 @endsection

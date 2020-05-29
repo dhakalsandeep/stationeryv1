@@ -1,4 +1,5 @@
 @extends('layouts.admin')
+
 @section('page_header')
 Issued Items
 @stop
@@ -15,7 +16,7 @@ Issued Items
     <div class="card">
         <div class="card-body">
             <div class="table-responsive">
-                <table class="table table-bordered">
+                <table class="table table-bordered table-striped table-hover datatable">
                     <thead>
                         <tr>
                             <th style="display: none"></th>
@@ -26,6 +27,7 @@ Issued Items
                             <th class="text-center" width="15%">Action</th>
                         </tr>
                     </thead>
+                    <tbody>
                     @foreach($issues as $issue)
                         <tr>
                             <td style="display: none"></td>
@@ -40,6 +42,7 @@ Issued Items
                             </td>
                         </tr>
                     @endforeach
+                    </tbody>
                 </table>
             </div>
         </div>

@@ -47,8 +47,6 @@ Items
             </div>
         </div>
     </div>
-
-</div>
 @section('scripts')
     {{--    @parent--}}
     <script>

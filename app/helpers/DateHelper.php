@@ -1,7 +1,7 @@
 <?php
 namespace App\helpers;
 
-class BsHelper
+class DateHelper
 {
     // Data for nepali date
     private $_bs = [
@@ -525,5 +525,54 @@ class BsHelper
         }
 
         return $utf;
+    }
+
+    public static function convertNepaliToEnglish($strs) {
+        // console.log($str);
+//        $charArray = array_map('intval', explode(',', $strs));
+        $charArray = $strs->toArray();
+//        $charArray = $str;
+        dd($charArray);
+        $engDate = '';
+        foreach($strs as $str) {
+            switch ($s) {
+                case '१':
+                    $engDate += '1';
+                    break;
+                case '२':
+                    $engDate += '2';
+                    break;
+                case '३':
+                    $engDate += '3';
+                    break;
+                case '४':
+                    $engDate += '4';
+                    break;
+                case '५':
+                    $engDate += '5';
+                    break;
+                case '६':
+                    $engDate += '6';
+                    break;
+                case '०':
+                    $engDate += '0';
+                    break;
+                case '७':
+                    $engDate += '7';
+                    break;
+                case '८':
+                    $engDate += '8';
+                    break;
+                case '९':
+                    $engDate += '9';
+                    break;
+
+                case '-':
+                    $engDate += '-';
+                    break;
+            }
+
+        };
+        return $engDate;
     }
 }

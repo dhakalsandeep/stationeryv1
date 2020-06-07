@@ -49543,6 +49543,7 @@ try {
  * to our Laravel back-end. This library automatically handles sending the
  * CSRF token as a header based on the value of the "XSRF" token cookie.
  */
+// window.adbs = require('ad-bs-converter');
 
 
 window.axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");

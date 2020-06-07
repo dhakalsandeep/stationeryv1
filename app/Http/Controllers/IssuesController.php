@@ -4,7 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Department;
 use App\FiscalYear;
-use App\helpers\BsHelper;
+use App\helpers\DateHelper;
+use App\helpers\NepaliToEnglishDateConverter;
 use App\IssueDetail;
 use App\Item;
 use App\ItemsManagement;
@@ -66,16 +67,20 @@ class IssuesController extends Controller
         $issue_date_time = Carbon::parse(date('Y:m:d H:i:s'))->timezone('Asia/Kathmandu');
         $issue_time = substr($issue_date_time,11,19);
 
-        $date_array = explode('-', $request->issue_date);
+//        $date_array = explode('-', $request->issue_date);
+//
+//        $bsObj = new DateHelper();
+//        $data_ad_array = $bsObj->nep_to_eng($date_array[0],$date_array[1],$date_array[2]);
+//        $issue_date_ad = $data_ad_array['year'] .'-'. $data_ad_array['month'] .'-'.$data_ad_array['date'];
+//
+        $nep_to_eng = new NepaliToEnglishDateConverter();
+        $issue_date_ad = $nep_to_eng->nep_to_eng_date_converter($request->issue_date);
 
-        $bsObj = new BsHelper();
-        $data_ad_array = $bsObj->nep_to_eng($date_array[0],$date_array[1],$date_array[2]);
-        $issue_date_ad = $data_ad_array['year'] .'-'. $data_ad_array['month'] .'-'.$data_ad_array['date'];
 
         $fiscal_year = FiscalYear::where('status',1)->first()->fiscal_year;
         $from_department_id = $request->from_department_id;
         $to_department_id = $request->to_department_id;
-        $issue_date = $request->issue_date;
+        $issue_date = $nep_to_eng->nep_date_formatter($request->issue_date);
         $items_managements_ids = $request->get('items_management_id');
         $editions = $request->get('edition');
         $qtys = $request->get('qty');

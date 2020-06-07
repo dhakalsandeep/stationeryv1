@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\FiscalYear;
+use App\helpers\DateHelper;
+use App\helpers\NepaliToEnglishDateConverter;
 use App\Item;
 use App\ItemsManagement;
 use App\PurchaseDetail;
@@ -80,15 +82,31 @@ class PurchasesController extends Controller
 
         $fiscal_year = FiscalYear::where('status',1)->first()->fiscal_year;
 
+        $nep_to_eng = new NepaliToEnglishDateConverter();
+        $supplier_date_ad = $nep_to_eng->nep_to_eng_date_converter($request->supplier_bill_date);
+        $supplier_date = $nep_to_eng->nep_date_formatter($request->supplier_bill_date);
+
+//        $supplier_date_array = explode('-', $request->supplier_bill_date);
+//
+//        $bsObj = new DateHelper();
+//        $data_ad_array = $bsObj->nep_to_eng($supplier_date_array[0],$supplier_date_array[1],$supplier_date_array[2]);
+//        $supplier_date_ad = $data_ad_array['year'] .'-'. $data_ad_array['month'] .'-'.$data_ad_array['date'];
+
+        $received_date_ad = $nep_to_eng->nep_to_eng_date_converter($request->received_date);;
+        $received_date = $nep_to_eng->nep_date_formatter($request->received_date);
+//        dd($received_date,$received_date_ad);
+
         DB::beginTransaction();
         try {
             $purchase_master = new PurchaseMaster();
             $purchase_master->suppliers_id = $request->suppliers_id;
             $purchase_master->supplier_bill_no = $request->supplier_bill_no;
-            $purchase_master->supplier_bill_date = $request->supplier_bill_date;
+            $purchase_master->supplier_bill_date = $supplier_date;
+            $purchase_master->supplier_bill_date_ad = $supplier_date_ad;
             $purchase_master->fiscal_year = $fiscal_year;
             $purchase_master->purchase_no = $request->purchase_no;
-            $purchase_master->received_date = $request->received_date;
+            $purchase_master->received_date = $received_date;
+            $purchase_master->received_date_ad = $received_date_ad;
             $purchase_master->received_by = $request->received_by;
             $purchase_master->is_payment_done = $request->is_payment_done;
             $purchase_master->amount = $request->sub_total;

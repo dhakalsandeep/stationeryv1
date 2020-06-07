@@ -46,48 +46,59 @@
                     </ul>
                 </li>
             @endcan
-
+            @can('purchase_access')
             <li class="nav-item">
                 <a href="{{ route('purchase.index') }}" class="nav-link">
                     <i class="fas fa-circle nav-icon"></i>
                     Purchase
                 </a>
             </li>
+            @endcan
 
+            @can('publisher_access')
             <li class="nav-item">
                 <a href="{{ route('publisher.index') }}" class="nav-link">
                     <i class="fas fa-circle nav-icon"></i>
                     Publishers
                 </a>
             </li>
+            @endcan
 
-
+            @can('supplier_access')
             <li class="nav-item">
                 <a href="{{ route('supplier.index') }}" class="nav-link">
                     <i class="fas fa-circle nav-icon"></i>
                     Suppliers
                 </a>
             </li>
+            @endcan
 
+            @can('item_access')
             <li class="nav-item">
                 <a href="{{ route('item.index') }}" class="nav-link">
                     <i class="fas fa-circle nav-icon"></i>
                     Items
                 </a>
             </li>
+            @endcan
 
+            @can('items_management_access')
             <li class="nav-item">
                 <a href="{{ route('stock.index') }}" class="nav-link">
                     <i class="fas fa-circle nav-icon"></i>
                     Items Management
                 </a>
             </li>
+            @endcan
+
+            @can('issue_item_access')
             <li class="nav-item">
                 <a href="{{ route('issue.index') }}" class="nav-link">
                     <i class="fas fa-circle nav-icon"></i>
                     Issue Items
                 </a>
             </li>
+            @endcan
 {{--            <li class="nav-item">--}}
 {{--                <a href="{{ route("admin.products.index") }}" class="nav-link {{ request()->is('admin/products') || request()->is('admin/products/*') ? 'active' : '' }}">--}}
 {{--                    <i class="fas fa-cogs nav-icon">--}}
@@ -96,6 +107,44 @@
 {{--                    {{ trans('global.product.title') }}--}}
 {{--                </a>--}}
 {{--            </li>--}}
+
+{{--            Reports                 --}}
+            @can('reports_access')
+                <li class="nav-item nav-dropdown">
+                    <a class="nav-link  nav-dropdown-toggle">
+                        <i class="fas fa-users file-chart-line">
+
+                        </i>
+                        Reports
+                    </a>
+                    <ul class="nav-dropdown-items">
+                        <li class="nav-item">
+                            <a href="{{ route("purchase.detail.report.index") }}" class="nav-link {{ request()->is('admin/permissions') || request()->is('admin/permissions/*') ? 'active' : '' }}">
+                                <i class="fas fa-unlock-alt nav-icon">
+
+                                </i>
+                                Purchase Detail
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route("admin.roles.index") }}" class="nav-link {{ request()->is('admin/roles') || request()->is('admin/roles/*') ? 'active' : '' }}">
+                                <i class="fas fa-briefcase nav-icon">
+
+                                </i>
+                                {{ trans('global.role.title') }}
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route("admin.users.index") }}" class="nav-link {{ request()->is('admin/users') || request()->is('admin/users/*') ? 'active' : '' }}">
+                                <i class="fas fa-user nav-icon">
+
+                                </i>
+                                {{ trans('global.user.title') }}
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+            @endcan
             <li class="nav-item">
                 <a href="#" class="nav-link" onclick="event.preventDefault(); document.getElementById('logoutform').submit();">
                     <i class="nav-icon fas fa-sign-out-alt">

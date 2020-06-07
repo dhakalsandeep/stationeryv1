@@ -4,7 +4,7 @@
 Issued Items
 @stop
 @section('content')
-    @can('issue_create')
+    @can('issue_item_create')
         <div style="margin-bottom: 10px;" class="row">
             <div class="col-lg-12">
                 <a class="btn btn-success" href="{{ route("issue.create") }}">

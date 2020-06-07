@@ -76,3 +76,7 @@ Route::post('/publisher', 'PublishersController@store')->name('publisher.store')
 Route::post('/publisher/{publisher}', 'PublishersController@update')->name('publisher.update');
 Route::delete('/publisher/{publisher}', 'PublishersController@destroy')->name('publisher.destroy');
 Route::delete('publisher/destroy', 'PublishersController@massDestroy')->name('publisher.massDestroy');
+
+
+//Purchase Detail Report
+Route::get('/purchase-detail-report','PurchaseDetailReportsController@index')->name('purchase.detail.report.index');

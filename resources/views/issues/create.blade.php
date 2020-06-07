@@ -1,141 +1,146 @@
 @extends('layouts.admin')
-@section('page_header')
-    Issue Detail
-@stop
 @section('content')
-<div class="container-fluid m-2">
-    <form action="{{route('issue.store')}}" enctype="multipart/form-data" id="issue_form" method="post">
-        @csrf
-        <div class="row">
+<div class="card">
+    <div class="card-header font-weight-bold" style="font-size: 200%;">Add Issue Detail</div>
 
-            <div class="col-md-12 d-flex">
-                <div class="form-group col-2 row justify-content-center">
-                    <label for="fiscal_year">Fiscal Year</label>
-                    <input id="fiscal_year"
-                           name="fiscal_year"
-                           type="text"
-                           class="form-control font-weight-bold"
-                           value="{{ $fiscal_year->fiscal_year }}"
-                           readonly
-                           autocomplete="fiscal_year" autofocus>
-                    @error('fiscal_year')
-                    <span class="invalid-feedback" role="alert">
-                        <strong>{{ $message }}</strong>
-                    </span>
-                    @enderror
-                </div>
+    <div class="card-body">
+        <form action="{{route('issue.store')}}" enctype="multipart/form-data" id="issue_form" method="post">
+            @csrf
+            <div class="row">
+                <div class="d-flex">
+                    <div class="form-group col-2 row justify-content-center">
+                        <label for="fiscal_year">Fiscal Year</label>
+                        <input id="fiscal_year"
+                               name="fiscal_year"
+                               type="text"
+                               class="form-control font-weight-bold"
+                               value="{{ $fiscal_year->fiscal_year }}"
+                               readonly
+                               autocomplete="fiscal_year" autofocus>
+                        @error('fiscal_year')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                        @enderror
+                    </div>
 
-                <div class="form-group col-2 ml-2 row justify-content-center">
-                    <label for="issue_date">Issue Date</label>
-                    <input id="issue_date"
-                           name="issue_date"
-                           type="text"
-                           class="form-control"
-                           value="{{ old('issue_date') }}"
-                           autocomplete="issue_date" autofocus>
-                    @error('issue_date')
-                    <span class="invalid-feedback" role="alert">
-                        <strong>{{ $message }}</strong>
-                    </span>
-                    @enderror
-                </div>
+                    <div class="form-group col-2 ml-3 row justify-content-center">
+                        <label for="issue_date">Issue Date</label>
+                        <input id="issue_date"
+                               name="issue_date"
+                               type="text"
+                               class="form-control"
+                               value="{{ old('issue_date') }}"
+                               autocomplete="issue_date" autofocus>
+                        @error('issue_date')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                        @enderror
+                    </div>
 
-                <div class="form-group col-4 row pl-3 justify-content-center">
-                    <label for="from_department">From Department</label>
-                    <select class="form-control" name="from_department_id" id="from_department_id">
-{{--                        <option value=0>------</option>--}}
-                        @foreach($departments as $department)
-                            <option value="{{$department->id}}">{{$department->name}}</option>
-                        @endforeach
-                    </select>
-                    @error('from_department')
-                    <span class="invalid-feedback" role="alert">
-                        <strong>{{ $message }}</strong>
-                    </span>
-                    @enderror
-                </div>
+                    <div class="form-group col-4 ml-3 row justify-content-center">
+                        <label for="from_department">From Department</label>
+                        <select class="form-control" name="from_department_id" id="from_department_id">
+    {{--                        <option value=0>------</option>--}}
+                            @foreach($departments as $department)
+                                <option value="{{$department->id}}">{{$department->name}}</option>
+                            @endforeach
+                        </select>
+                        @error('from_department')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                        @enderror
+                    </div>
 
-                <div class="form-group col-4 row pl-3 justify-content-center">
-                    <label for="to_department">To Department</label>
-                    <select class="form-control" name="to_department_id" id="to_department_id">
-{{--                        <option value=0>-------</option>--}}
-                        @foreach($departments as $department)
-                            <option value="{{$department->id}}" selected="2">{{$department->name}}</option>
-                        @endforeach
-                    </select>
-                    @error('to_department')
-                    <span class="invalid-feedback" role="alert">
-                        <strong>{{ $message }}</strong>
-                    </span>
-                    @enderror
-                </div>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col-md-12 d-flex issue-detail">
-                <div class="form-group col-md-6 row">
-                    <label for="item">Item Name</label>
-                    <select class="form-control" name="items_management_id[]" id="items_management_id">
-                        <option value="">...............</option>
-                        @foreach($stocks as $stock)
-                            <option value="{{$stock->id}}">{{ $stock->item->name }}|{{ $stock->edition }}|{{ $stock->cur_qty }}</option>
-                        @endforeach
-                    </select>
-                    @error('item')
-                    <span class="invalid-feedback" role="alert">
-                        <strong>{{ $message }}</strong>
-                    </span>
-                    @enderror
-                </div>
-
-                <div class="form-group col-md-4 row pl-3">
-                    <label for="edition">Edition</label>
-                    <input id="edition"
-                           name="edition[]"
-                           type="text"
-                           class="form-control"
-                           value="{{ old('edition') }}"
-                           autocomplete="edition" autofocus>
-                    @error('edition')
-                    <span class="invalid-feedback" role="alert">
-                        <strong>{{ $message }}</strong>
-                    </span>
-                    @enderror
-                </div>
-
-                <div class="form-group col-md-2 row pl-3">
-                    <label for="qty">Qty</label>
-                    <input id="qty"
-                           name="qty[]"
-                           type="number"
-                           max="10"
-                           onkeypress="return (event.charCode == 8 || event.charCode == 0 || event.charCode == 13) ? null : event.charCode >= 48 && event.charCode <= 57"
-                           class="form-control"
-                           value="{{ old('qty') }}"
-                           autocomplete="qty" autofocus>
-                    @error('qty')
-                    <span class="invalid-feedback" role="alert">
-                        <strong>{{ $message }}</strong>
-                    </span>
-                    @enderror
-                    <button class="btn btn-danger btn-xs" id="removeDetail" style="position: absolute;right: -14px;bottom: 9px;"><i class="fa fa-times"></i></button>
+                    <div class="form-group col-4 row ml-3 justify-content-center">
+                        <label for="to_department">To Department</label>
+                        <select class="form-control" name="to_department_id" id="to_department_id">
+    {{--                        <option value=0>-------</option>--}}
+                            @foreach($departments as $department)
+                                <option value="{{$department->id}}" selected="2">{{$department->name}}</option>
+                            @endforeach
+                        </select>
+                        @error('to_department')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                        @enderror
+                    </div>
                 </div>
             </div>
 
-            <div class="col-md-12 add-detail-btn-wrapper" style="width: 100%;">
-                <button class="btn btn-primary btn-xs" id="addDetail"><i class="fa fa-plus"></i> </button>
-            </div>
-        </div>
+            <div class="row">
+                <div class="d-flex issue-detail">
+                    <div class="form-group col-md-6 row">
+                        <label for="item">Item Name</label>
+                        <select class="form-control" name="items_management_id[]" id="items_management_id">
+                            <option value="">...............</option>
+                            @foreach($stocks as $stock)
+                                <option value="{{$stock->id}}">{{ $stock->item->name }}|{{ $stock->edition }}|{{ $stock->cur_qty }}</option>
+                            @endforeach
+                        </select>
+                        @error('item')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                        @enderror
+                    </div>
 
-        <div class="col-md-12 row">
-            <div class="form-group d-flex pt-4">
-                <button type="submit" name="btn_save_data" id="btn_save_data" class="btn btn-primary">
-                    <i class="fa fa-save"></i> Save
-                </button>
-            </div>
-        </div>
-    </form>
+                    <div class="form-group col-md-4 row pl-3">
+                        <label for="edition">Edition</label>
+                        <input id="edition"
+                               name="edition[]"
+                               type="text"
+                               class="form-control"
+                               value="{{ old('edition') }}"
+                               autocomplete="edition" autofocus>
+                        @error('edition')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                        @enderror
+                    </div>
+
+                    <div class="form-group col-md-2 row pl-3">
+                        <label for="qty">Qty</label>
+                        <input id="qty"
+                               name="qty[]"
+                               type="number"
+                               max="10"
+                               onkeypress="return (event.charCode == 8 || event.charCode == 0 || event.charCode == 13) ? null : event.charCode >= 48 && event.charCode <= 57"
+                               class="form-control"
+                               value="{{ old('qty') }}"
+                               autocomplete="qty" autofocus>
+                        @error('qty')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                        @enderror
+                        <button class="btn btn-danger btn-xs" id="removeDetail" style="position: absolute;right: -14px;bottom: 9px;"><i class="fa fa-times"></i></button>
+                    </div>
+                </div>
+
+                <div class="add-detail-btn-wrapper" style="width: 100%;">
+                    <button class="btn btn-primary btn-xs" id="addDetail"><i class="fa fa-plus"></i> </button>
+                </div>
+
+
+{{--            <div class="col-md-12 row">--}}
+{{--                <div class="form-group d-flex pt-4">--}}
+{{--                    <button type="submit" name="btn_save_data" id="btn_save_data" class="btn btn-primary">--}}
+{{--                        <i class="fa fa-save"></i> Save--}}
+{{--                    </button>--}}
+{{--                </div>--}}
+{{--            </div>--}}
+                <div class="form-group pt-4">
+                    <button type="submit" name="btn_save_data" id="btn_save_data" class="btn btn-primary">
+                        <i class="fa fa-save"></i> Save
+                    </button>
+                </div>
+        </form>
+    </div>
 </div>
 @endsection
 

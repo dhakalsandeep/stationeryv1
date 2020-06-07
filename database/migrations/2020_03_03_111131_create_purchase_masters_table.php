@@ -19,7 +19,9 @@ class CreatePurchaseMastersTable extends Migration
             $table->string('purchase_no',25);
             $table->integer('suppliers_id');
             $table->string('supplier_bill_date',10);
+            $table->string('supplier_bill_date_ad',10);
             $table->string('received_date',10);
+            $table->string('received_date_ad',10);
             $table->string('received_by',100);
             $table->string('fiscal_year',6);
             $table->float('amount');

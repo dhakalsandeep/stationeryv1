@@ -264,7 +264,7 @@
             console.log("here");
             let $details = $('.stock-detail');
             if($details.length > 1){
-                $(this).closest('.stock-detail').remove();
+                $(this).closest('.stock-detail tr').remove();
             }else{
                 alert("Can not delete first")
             }

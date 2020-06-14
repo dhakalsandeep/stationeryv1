@@ -294,10 +294,10 @@
     <script>
         $(document).on('change', '#from_department_id', function () {
             let from_dep_id = $('#from_department_id').val();
-            if (from_dep_id == 1) {
+            if (from_dep_id === 1) {
                 $('select#to_department_id').val(2);
             }
-            else if (from_dep_id == 2) {
+            else if (from_dep_id === 2) {
                 $('select#to_department_id').val(1);
             }
             else {

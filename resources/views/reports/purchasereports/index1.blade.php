@@ -64,6 +64,7 @@
                 <table class="table table-bordered table-striped table-hover datatable">
                     <thead>
                     <tr>
+                        <th></th>
                         <th>R. Date</th>
                         <th>Inv. No</th>
                         <th>S. BillNo</th>
@@ -78,7 +79,7 @@
                         <th>Total</th>
                     </tr>
                     </thead>
-{{--                    <tbody>--}}
+                    <tbody>
 {{--                    @foreach($purchase_details as $purchase_detail)--}}
 {{--                        <tr>--}}
 {{--                            <td></td>--}}
@@ -96,13 +97,96 @@
 {{--                            <td>{{$purchase_detail->total_amount}}</td>--}}
 {{--                        </tr>--}}
 {{--                    @endforeach--}}
-{{--                    </tbody>--}}
+                    </tbody>
                 </table>
                 {{ csrf_field() }}
             </div>
         </div>
     </div>
 @section('scripts')
+    <script>
+        $(document).ready(function(){
+
+            var date = new Date();
+            console.log(date);
+
+
+            var _token = $('input[name="_token"]').val();
+            console.log(_token);
+            fetch_data();
+
+            function fetch_data(from_date = '', to_date = '')
+            {
+                console.log("fetch data");
+                $.ajax({
+                    url:"{{ route('get.purchase.reports.fetchdata') }}",
+                    type:"POST",
+                    data:{from_date:from_date, to_date:to_date, _token:_token},
+                    dataType:"json",
+                    success:function(data)
+                    {
+                        // alert('Test');
+                        console.log(data);
+                        // let data = jQuery.parseJSON(res);
+                        // console.log(data);
+                        var output = '';
+                        $('#total_records').text(data.length);
+                        for(var i = 0; i < data.length; i++)
+                        {
+                        //     output = `<tr>
+                        //     <td></td>
+                        //     <td>${data[i].received_date}</td>
+                        //     <td>${data[i].purchase_no}</td>
+                        //     <td>${data[i].supplier_bill_no}</td>
+                        //     <td>${data[i].code}</td>
+                        //     <td>${data[i].items_name}</td>
+                        //     <td>${data[i].type}</td>
+                        //     <td>${data[i].supplier_name}</td>
+                        //     <td>${data[i].qty}</td>
+                        //     <td>${data[i].rate}</td>
+                        //     <td>${data[i].dis_per}</td>
+                        //     <td>${data[i].vat}</td>
+                        //     <td>${data[i].total_amount}</td>
+                        // </tr>`;
+
+                        output += '<tr>';
+                        // output += '<td></td>';
+                        output += '<td>' + data[i].received_date + '</td>';
+                        output += '<td>' + data[i].purchase_no + '</td>';
+                        output += '<td>' + data[i].supplier_bill_no + '</td>';
+                        output += '<td>' + data[i].code + '</td>';
+                        output += '<td>' + data[i].items_name + '</td>';
+                        output += '<td>' + data[i].type + '</td>';
+                        output += '<td>' + data[i].supplier_name + '</td>';
+                        output += '<td>' + data[i].qty + '</td>';
+                        output += '<td>' + data[i].rate + '</td>';
+                        output += '<td>' + data[i].dis_per + '</td>';
+                        output += '<td>' + data[i].vat + '</td>';
+                        output += '<td>' + data[i].total_amount + '</td>';
+                        output += '</tr>';
+                        console.log(output);
+                        }
+                        $('tbody').html(output);
+                    }
+                })
+            }
+
+            $('#btn_get_data').click(function(){
+                var from_date = $('#from_date').val();
+                var to_date = $('#to_date').val();
+                console.log(from_date,to_date);
+                if(from_date != '' &&  to_date != '')
+                {
+                    console.log("here")
+                    fetch_data(from_date, to_date);
+                }
+                else
+                {
+                    alert('Both Date is required');
+                }
+            });
+        });
+    </script>
 
     {{--Convert Nepali date to roman date --}}
 {{--    <script>--}}
@@ -153,73 +237,15 @@
 {{--        }--}}
 {{--    </script>--}}
 
+
+    {{--    @parent--}}
     <script>
         $(function () {
             let dtButtons = [];
-            // $('.datatable').DataTable({ buttons: dtButtons });
-            // $('.select-checkbox').css('display','none');
-            var date = new Date();
-            console.log(date);
-
-
-            // var _token = $('input[name="_token"]').val();
-
-            console.log(_token);
-            fetch_data();
-
-            function fetch_data(from_date = '', to_date = '')
-            {
-                console.log("fetch data");
-                $('.datatable').DataTable({
-                    processing: true,
-                    serverSide: true,
-
-                    ajax: {
-                        url: "{{ route('get.purchase.reports.fetchdata') }}",
-                        type: 'post',
-                        data: function (d) {
-                            d.from_date = from_date;
-                            d.to_date = to_date;
-                            d._token = _token;
-                        },
-
-                    },
-                    columns:[
-                        { "data": "received_date" },
-                        { "data": "purchase_no" },
-                        { "data": "supplier_bill_no" },
-                        { "data": "code" },
-                        { "data": "items_name" },
-                        { "data": "type" },
-                        { "data": "supplier_name" },
-                        { "data": "qty" },
-                        { "data": "rate" },
-                        { "data": "dis_per" },
-                        { "data": "vat" },
-                        { "data": "total_amount" },
-                        { "data": "last_name" },
-                    ]
-                });
-            }
-
-            $('#btn_get_data').click(function(){
-                var from_date = $('#from_date').val();
-                var to_date = $('#to_date').val();
-                console.log(from_date,to_date);
-                if(from_date != '' &&  to_date != '')
-                {
-                    console.log("here")
-                    fetch_data(from_date, to_date);
-                }
-                else
-                {
-                    alert('Both Date is required');
-                }
-            });
+            $('.datatable:not(.ajaxTable)').DataTable({ buttons: dtButtons });
+            $('.select-checkbox').css('display','none');
         })
     </script>
-
-    {{--    @parent--}}
 
 
 {{--    --}}{{-- Nepali Date picker--}}

@@ -75,11 +75,13 @@ class PurchasesController extends Controller
 
 
 
+
         if ( ! isset($request['is_payment_done']) )
             $request['is_payment_done'] = 'N';
         else
             $request['is_payment_done'] = 'Y';
 
+//        dd($request->toArray());
         $fiscal_year = FiscalYear::where('status',1)->first()->fiscal_year;
 
         $nep_to_eng = new NepaliToEnglishDateConverter();
@@ -140,8 +142,9 @@ class PurchasesController extends Controller
                 $detail['amount'] = $amounts[$index];
                 $detail['qty'] = $qtys[$index];
                 $detail['discount'] = $discounts[$index];
+//                dd($discounts[$index]>0,$discounts[$index],$amounts[$index],$qtys[$index],($discounts[$index]/($amounts[$index]*$qtys[$index])));
                 if ($discounts[$index]>0) {
-                    $detail['dis_per'] = ($discounts[$index]/$amounts[$index])*100;
+                    $detail['dis_per'] = ($discounts[$index]/($amounts[$index]*$qtys[$index]))*100;
                 }
                 $detail['vat'] = $vats[$index];
                 $detail['total'] = $totals[$index];
@@ -155,7 +158,7 @@ class PurchasesController extends Controller
                 $purchase_detail->amount = $detail['amount'];
                 $purchase_detail->qty = $detail['qty'];
                 $purchase_detail->discount = $detail['discount'];
-                $purchase_detail->dis_per = $request->sub_total;
+                $purchase_detail->dis_per = $detail['dis_per'] ?? 0;
                 $purchase_detail->vat = $detail['vat'];
                 $purchase_detail->total_amount = $detail['total'];
                 $purchase_detail->users_id = auth()->user()->id;

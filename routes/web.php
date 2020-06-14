@@ -80,3 +80,4 @@ Route::delete('publisher/destroy', 'PublishersController@massDestroy')->name('pu
 
 //Purchase Detail Report
 Route::get('/purchase-detail-report','PurchaseDetailReportsController@index')->name('purchase.detail.report.index');
+Route::post('/purchase-detail-report/fetch_data', 'PurchaseDetailReportsController@fetch_data')->name('get.purchase.reports.fetchdata');

@@ -64,7 +64,7 @@ class PurchaseDetailReportsController extends Controller
     public function fetch_data(Request $request)
     {
 //        dd($request->ajax());
-        if($request->ajax())
+//        if($request->ajax())
         {
             if($request->from_date != '' && $request->to_date != '')
             {
@@ -76,13 +76,12 @@ class PurchaseDetailReportsController extends Controller
                 $from_date = $from_date->toDateString();
                 $data = $this->get_data($from_date,$from_date);
             }
-            return datatables()->of($data)
-                ->make(true);
+            return datatables()->of($data)->make(true);
 //            return json_encode($data);
         }
     }
 
-    private function get_data($from_date, $to_date)
+    public function get_data($from_date, $to_date)
     {
         return $data = DB::table('purchase_masters as pm')
             ->join('purchase_details as pd', 'pm.id', '=', 'pd.purchase_masters_id')
@@ -188,5 +187,20 @@ class PurchaseDetailReportsController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    /**
+     * Print purchase detail report.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function print_purchase_detail_report(Request $request)
+    {
+        $company_info = auth()->user()->company_info;
+        $from_date = $request->from_date;
+        $to_date = $request->to_date;
+        $purchase_details = $this->get_data($from_date,$to_date);
+        return view('reports.purchasereports.print',compact('purchase_details','company_info','from_date','to_date'));
     }
 }

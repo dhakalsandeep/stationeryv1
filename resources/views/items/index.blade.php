@@ -21,7 +21,6 @@ Items
                 <table class="table table-bordered table-striped table-hover datatable">
                     <thead>
                         <tr>
-                            <th></th>
                             <th>Code</th>
                             <th>Items Name</th>
                             <th>Items Type</th>
@@ -33,7 +32,6 @@ Items
                     <tbody>
                     @foreach($items as $item)
                         <tr>
-                            <td></td>
                             <td>{{$item->code}}</td>
                             <td>{{$item->name}}</td>
                             <td>{{$item->itemType->type}}</td>
@@ -51,9 +49,11 @@ Items
     {{--    @parent--}}
     <script>
         $(function () {
-            let dtButtons = [];
-            $('.datatable:not(.ajaxTable)').DataTable({ buttons: dtButtons });
-            $('.select-checkbox').css('display','none');
+
+            $('.datatable:not(.ajaxTable)').DataTable();
+            // let dtButtons = [];
+            // $('.datatable:not(.ajaxTable)').DataTable({ buttons: dtButtons });
+            // $('.select-checkbox').css('display','none');
         })
     </script>
 @endsection

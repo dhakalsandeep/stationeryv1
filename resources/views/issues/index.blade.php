@@ -19,7 +19,6 @@ Issued Items
                 <table class="table table-bordered table-striped table-hover datatable">
                     <thead>
                         <tr>
-                            <th style="display: none"></th>
                             <th class="text-center" width="40%">Items Name</th>
                             <th class="text-center" width="10%">Issue Qty</th>
                             <th class="text-center" width="10%">Issue Date</th>
@@ -30,7 +29,6 @@ Issued Items
                     <tbody>
                     @foreach($issues as $issue)
                         <tr>
-                            <td style="display: none"></td>
                             <td class="text-left">{{$issue->item->name}}</td>
                             <td class="text-right">{{$issue->qty}}</td>
                             <td class="text-center">{{$issue->issue_date}}</td>
@@ -52,9 +50,9 @@ Issued Items
     {{--    @parent--}}
     <script>
         $(function () {
-            let dtButtons = [];
-            $('.datatable:not(.ajaxTable)').DataTable({ buttons: dtButtons });
-            $('.select-checkbox').css('display','none');
+            // let dtButtons = [];
+            $('.datatable:not(.ajaxTable)').DataTable();
+            // $('.select-checkbox').css('display','none');
         })
     </script>
 @endsection

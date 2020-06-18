@@ -18,7 +18,6 @@ Stock Management
                 <table class="table table-bordered table-striped table-hover datatable">
                     <thead>
                         <tr>
-                            <th></th>
                             <th>Purchase No</th>
                             <th>Items Name</th>
                             <th>Edition</th>
@@ -32,7 +31,6 @@ Stock Management
                     <tbody>
                     @foreach($stocks as $stock)
                         <tr>
-                            <td></td>
                             <td>{{$stock->purchase_detail->purchase_no}}</td>
                             <td>{{$stock->item->name}}</td>
                             <td>{{$stock->edition}}</td>
@@ -53,9 +51,7 @@ Stock Management
     {{--    @parent--}}
     <script>
         $(function () {
-            let dtButtons = [];
-            $('.datatable:not(.ajaxTable)').DataTable({ buttons: dtButtons });
-            $('.select-checkbox').css('display','none');
+            $('.datatable:not(.ajaxTable)').DataTable();
         })
     </script>
 @endsection

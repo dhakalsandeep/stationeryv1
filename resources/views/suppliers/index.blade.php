@@ -18,7 +18,6 @@ Suppliers
                 <table class="table table-bordered table-striped table-hover datatable">
                     <thead>
                         <tr>
-                            <th></th>
                             <th>Supplier</th>
                             <th>Address</th>
                             <th>Phone No</th>
@@ -29,7 +28,6 @@ Suppliers
                     <tbody>
                     @foreach($suppliers as $supplier)
                         <tr>
-                            <td></td>
                             <td>{{$supplier->name}}</td>
                             <td>{{$supplier->address}}</td>
                             <td>{{$supplier->phoneno}}</td>
@@ -47,9 +45,7 @@ Suppliers
     {{--    @parent--}}
     <script>
         $(function () {
-            let dtButtons = [];
-            $('.datatable:not(.ajaxTable)').DataTable({ buttons: dtButtons });
-            $('.select-checkbox').css('display','none');
+            $('.datatable:not(.ajaxTable)').DataTable();
         })
     </script>
 @endsection

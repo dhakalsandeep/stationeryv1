@@ -6,7 +6,9 @@
 
     <div class="card">
         <div class="card-header">
-                <div class="row input-daterange">
+            <form action="/purchase-detail-report/print" enctype="multipart/form-data" method="post">
+                @csrf
+                <div class="row">
                     <div class="form-group col-3 row">
                         <label for="from_date">From Date</label>
                         <input id="from_date"
@@ -51,19 +53,27 @@
                                class="form-control btn btn-info"
                                value="AD">
                     </div>
-                    <div class="form-group col-4 row ml-1">
-                        <label for="submit">&nbsp</label>
-                        <input type="submit" id="btn_get_data" value="Get"
+                    <div class="form-group col-2 row ml-1">
+                        <label for="btn_get_data">&nbsp</label>
+                        <input type="button" id="btn_get_data" value="Get"
+                               class="form-control btn btn-primary" autofocus>
+                    </div>
+                    <div class="form-group col-2 row ml-1">
+                        <label for="btn_print_data">&nbsp</label>
+                        <input type="submit" id="btn_print_data" value="Print"
                                class="form-control btn btn-primary" autofocus>
                     </div>
                 </div>
+            </form>
         </div>
         <div class="card-body">
 
             <div class="table-responsive">
-                <table class="table table-bordered table-striped table-hover datatable">
+                <table class="table table-bordered table-striped table-hover datatable" id="datatable">
                     <thead>
                     <tr>
+{{--                        <th ></th>--}}
+{{--                        <th style="display: none"></th>--}}
                         <th>R. Date</th>
                         <th>Inv. No</th>
                         <th>S. BillNo</th>
@@ -71,8 +81,8 @@
                         <th>Item Name</th>
                         <th>Item Type</th>
                         <th>Supplier</th>
-                        <th>Qty</th>
                         <th>Rate</th>
+                        <th>Qty</th>
                         <th>Discount(%)</th>
                         <th>VAT(%)</th>
                         <th>Total</th>
@@ -98,7 +108,7 @@
 {{--                    @endforeach--}}
 {{--                    </tbody>--}}
                 </table>
-                {{ csrf_field() }}
+{{--                {{ csrf_field() }}--}}
             </div>
         </div>
     </div>
@@ -156,7 +166,7 @@
     <script>
         $(function () {
             let dtButtons = [];
-            // $('.datatable').DataTable({ buttons: dtButtons });
+            // $('#datatable').DataTable({ buttons: dtButtons });
             // $('.select-checkbox').css('display','none');
             var date = new Date();
             console.log(date);
@@ -165,39 +175,47 @@
             // var _token = $('input[name="_token"]').val();
 
             console.log(_token);
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
             fetch_data();
+
 
             function fetch_data(from_date = '', to_date = '')
             {
                 console.log("fetch data");
-                $('.datatable').DataTable({
+
+                $('#datatable').DataTable({
+                    destroy: true,
                     processing: true,
                     serverSide: true,
+                    // pageLength: 100,
 
                     ajax: {
                         url: "{{ route('get.purchase.reports.fetchdata') }}",
-                        type: 'post',
+                        type: 'GET',
                         data: function (d) {
                             d.from_date = from_date;
                             d.to_date = to_date;
-                            d._token = _token;
                         },
 
                     },
                     columns:[
-                        { "data": "received_date" },
-                        { "data": "purchase_no" },
-                        { "data": "supplier_bill_no" },
-                        { "data": "code" },
-                        { "data": "items_name" },
-                        { "data": "type" },
-                        { "data": "supplier_name" },
-                        { "data": "qty" },
-                        { "data": "rate" },
-                        { "data": "dis_per" },
-                        { "data": "vat" },
-                        { "data": "total_amount" },
-                        { "data": "last_name" },
+                        { data: "received_date",name: "received_date" },
+                        { data: "purchase_no",name: "purchase_no" },
+                        { data: "supplier_bill_no",name: "supplier_bill_no" },
+                        { data: "code",name: "code" },
+                        { data: "items_name",name: "items_name" },
+                        { data: "type",name: "type" },
+                        { data: "supplier_name",name: "supplier_name" },
+                        { data: "rate",name: "rate" },
+                        { data: "qty",name: "qty" },
+                        { data: "dis_per",name: "dis_per" },
+                        { data: "vat",name: "vat" },
+                        { data: "total_amount",name: "total_amount" },
+                        // { data: "last_name",name: "last_name" },
                     ]
                 });
             }
@@ -215,6 +233,8 @@
                 {
                     alert('Both Date is required');
                 }
+                // $('#datatable').DataTable().draw(true);
+                // $('.select-checkbox').css('display','none');
             });
         })
     </script>

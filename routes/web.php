@@ -80,4 +80,8 @@ Route::delete('publisher/destroy', 'PublishersController@massDestroy')->name('pu
 
 //Purchase Detail Report
 Route::get('/purchase-detail-report','PurchaseDetailReportsController@index')->name('purchase.detail.report.index');
-Route::post('/purchase-detail-report/fetch_data', 'PurchaseDetailReportsController@fetch_data')->name('get.purchase.reports.fetchdata');
+Route::get( '/purchase-detail-report/fetch_data', 'PurchaseDetailReportsController@fetch_data')->name('get.purchase.reports.fetchdata');
+Route::post('/purchase-detail-report/print', 'PurchaseDetailReportsController@print_purchase_detail_report')->name('purchase.detail.report.print');
+//Route::post('/purchase-detail-report/print', function (){
+//    return "Success";
+//})->name('purchase.detail.report.print');

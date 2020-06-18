@@ -21,7 +21,6 @@ Purchases
                 <table class="table table-bordered table-striped table-hover datatable">
                     <thead>
                         <tr>
-                            <th ></th>
                             <th class="text-center" width="22%">Supplier</th>
                             <th class="text-center" width="8%">Bill No</th>
                             <th class="text-center" width="8%">S Billdate</th>
@@ -37,7 +36,6 @@ Purchases
                     <tbody>
                     @foreach($purchases as $purchase)
                         <tr>
-                            <td></td>
                             <td>{{$purchase->supplier->name}}</td>
                             <td>{{$purchase->supplier_bill_no}}</td>
                             <td>{{$purchase->supplier_bill_date}}</td>
@@ -63,9 +61,7 @@ Purchases
 @section("scripts")
     <script>
         $(function () {
-            let dtButtons = [];
-            $('.datatable:not(.ajaxTable)').DataTable({ buttons: dtButtons });
-            $('.select-checkbox').css('display','none');
+            $('.datatable:not(.ajaxTable)').DataTable();
         })
     </script>
 @endsection

@@ -8,9 +8,9 @@ class PurchaseDetail extends Model
 {
     protected $guarded = [];
 
-    public function items_management()
+    public function issue_detail()
     {
-        return $this->hasOne(ItemsManagement::class);
+        return $this->hasOne(IssueDetail::class);
     }
 
     public function items()

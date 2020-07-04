@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\IssueDetail;
 use App\ItemsManagement;
 use App\ItemsRoomRack;
 use Illuminate\Http\Request;
@@ -16,11 +17,11 @@ class StocksController extends Controller
 
     public function index()
     {
-        $stocks = ItemsManagement::where('company_infos_id',auth()->user()->company_infos_id)->get();
+        $stocks = IssueDetail::where('company_infos_id',auth()->user()->company_infos_id)->get();
         return view('stocks.index',compact('stocks'));
     }
 
-    public function edit(ItemsManagement $stock)
+    public function edit(IssueDetail $stock)
     {
         //dd($stock->items_room_rack());
 //        $details = ItemsRoomRack::where('items_managements_id',$stock->id);
@@ -39,10 +40,10 @@ class StocksController extends Controller
 //            'url' => []
 //        ]);
 
-        $stock = \App\ItemsManagement::findorfail($id);
+        $stock = \App\IssueDetail::findorfail($id);
         //dd($stock->items_room_rack());
 
-        $items_room_rack = DB::table('items_room_racks')->where('items_managements_id',$id)->delete();
+        $items_room_rack = DB::table('items_room_racks')->where('issue_details_id',$id)->delete();
 
         $room_nos = $request->get('room_no');
         $rack_nos = $request->get('rack_no');
@@ -58,7 +59,7 @@ class StocksController extends Controller
                 $items_room_rack_detail['qty'] = $qtys[$key];
 
                 $items_room_rack = new ItemsRoomRack();
-                $items_room_rack->items_managements_id = $id;
+                $items_room_rack->issue_details_id = $id;
                 $items_room_rack->room_no = $items_room_rack_detail['room_no'];
                 $items_room_rack->rack_no = $items_room_rack_detail['rack_no'];
                 $items_room_rack->qty = $items_room_rack_detail['qty'];
@@ -74,7 +75,7 @@ class StocksController extends Controller
             $items_room_rack_detail['qty'] = $qtys;
 
             $items_room_rack = new ItemsRoomRack();
-            $items_room_rack->items_managements_id = $id;
+            $items_room_rack->issue_details_id = $id;
             $items_room_rack->room_no = $items_room_rack_detail['room_no'];
             $items_room_rack->rack_no = $items_room_rack_detail['rack_no'];
             $items_room_rack->qty = $items_room_rack_detail['qty'];

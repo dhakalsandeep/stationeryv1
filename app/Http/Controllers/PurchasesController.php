@@ -5,11 +5,13 @@ namespace App\Http\Controllers;
 use App\FiscalYear;
 use App\helpers\DateHelper;
 use App\helpers\NepaliToEnglishDateConverter;
+use App\IssueDetail;
 use App\Item;
 use App\ItemsManagement;
 use App\PurchaseDetail;
 use App\PurchaseMaster;
 use App\Supplier;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -75,7 +77,7 @@ class PurchasesController extends Controller
 
 
 
-
+        $purchase_no = $this->get_new_purchase_no();
         if ( ! isset($request['is_payment_done']) )
             $request['is_payment_done'] = 'N';
         else
@@ -98,6 +100,9 @@ class PurchasesController extends Controller
         $received_date = $nep_to_eng->nep_date_formatter($request->received_date);
 //        dd($received_date,$received_date_ad);
 
+        $issue_date_time = Carbon::parse(date('Y:m:d H:i:s'))->timezone('Asia/Kathmandu');
+        $issue_time = substr($issue_date_time,11,19);
+
         DB::beginTransaction();
         try {
             $purchase_master = new PurchaseMaster();
@@ -106,7 +111,7 @@ class PurchasesController extends Controller
             $purchase_master->supplier_bill_date = $supplier_date;
             $purchase_master->supplier_bill_date_ad = $supplier_date_ad;
             $purchase_master->fiscal_year = $fiscal_year;
-            $purchase_master->purchase_no = $request->purchase_no;
+            $purchase_master->purchase_no = $purchase_no;
             $purchase_master->received_date = $received_date;
             $purchase_master->received_date_ad = $received_date_ad;
             $purchase_master->received_by = $request->received_by;
@@ -120,8 +125,7 @@ class PurchasesController extends Controller
             $purchase_master->company_infos_id = auth()->user()->company_infos_id;
             $purchase_master->save();
 
-            $purchase_master_id = PurchaseMaster::latest()->first()->id;
-            $purchase_no = PurchaseMaster::latest()->first()->purchase_no;
+            $purchase_master_id = $purchase_master->id;
             //return redirect(route('publisher.index'));
             // save master and get id then
 
@@ -165,17 +169,26 @@ class PurchasesController extends Controller
                 $purchase_detail->company_infos_id = auth()->user()->company_infos_id;
                 $purchase_detail->save();
 
-                $purchase_details_id = PurchaseDetail::latest()->first()->id;
+//                $purchase_details_id = PurchaseDetail::latest()->first()->id;
+                $purchase_details_id = $purchase_detail->id;
 
-                $items_management = new ItemsManagement();
-                $items_management->items_id = $detail['items_id'];
-                $items_management->edition = $detail['edition'];
-                $items_management->qty = $detail['qty'];
-                $items_management->cur_qty = $detail['qty'];
-                $items_management->purchase_details_id = $purchase_details_id;
-                $items_management->users_id = auth()->user()->id;
-                $items_management->company_infos_id = auth()->user()->company_infos_id;
-                $items_management->save();
+                $issue_detail = new IssueDetail();
+                $issue_detail->items_id = $detail['items_id'];
+                $issue_detail->edition = $detail['edition'];
+                $issue_detail->qty = $detail['qty'];
+                $issue_detail->cur_qty = $detail['qty'];
+                $issue_detail->purchase_details_id = $purchase_details_id;
+                $issue_detail->issue_date = $received_date;
+                $issue_detail->issue_date_ad = $received_date_ad;
+                $issue_detail->issue_time = $issue_time;
+                $issue_detail->ids_id = 0;
+                $issue_detail->from_dep_id = 1;
+                $issue_detail->to_dep_id = 1;
+                $issue_detail->fiscal_year = $fiscal_year;
+                $issue_detail->transaction_type = 'PURCHASE';
+                $issue_detail->users_id = auth()->user()->id;
+                $issue_detail->company_infos_id = auth()->user()->company_infos_id;
+                $issue_detail->save();
             }
 
             DB::commit();

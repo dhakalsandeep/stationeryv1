@@ -127,6 +127,14 @@
                             </a>
                         </li>
                         <li class="nav-item">
+                            <a href="{{ route("stock.aging.report.index") }}" class="nav-link {{ request()->is('admin/permissions') || request()->is('admin/permissions/*') ? 'active' : '' }}">
+                                <i class="fas fa-unlock-alt nav-icon">
+
+                                </i>
+                                Stock Aging
+                            </a>
+                        </li>
+                        <li class="nav-item">
                             <a href="{{ route("admin.roles.index") }}" class="nav-link {{ request()->is('admin/roles') || request()->is('admin/roles/*') ? 'active' : '' }}">
                                 <i class="fas fa-briefcase nav-icon">
 

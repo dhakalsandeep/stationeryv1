@@ -91,7 +91,7 @@ class PurchaseDetailReportsController extends Controller
             ->select('pm.received_date_ad as received_date', 'pm.purchase_no',
                 'pm.supplier_bill_no','it.code','it.name as items_name','itt.type',
                 'sp.name as supplier_name','pd.qty','pd.amount as rate','pd.dis_per','pd.vat',
-                'pd.total_amount')
+                'pd.total_amount',DB::raw("'' as check_box"))
             ->whereBetween('received_date_ad', [$from_date, $to_date])
             ->where('pm.company_infos_id',auth()->user()->company_infos_id)
             ->orderBy('pm.created_at', 'asc')

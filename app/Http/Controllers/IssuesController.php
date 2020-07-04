@@ -30,9 +30,10 @@ class IssuesController extends Controller
 
     public function create()
     {
-        $stocks = ItemsManagement::where([['company_infos_id','=',auth()->user()->company_infos_id],
+        $stocks = IssueDetail::where([['company_infos_id','=',auth()->user()->company_infos_id],
+            ['to_dep_id','=',1],
                  ['cur_qty','>','0']])->orderby('created_at','desc')->get();
-        $items_management = ItemsManagement::with('issue_details')->get();
+//        $items_management = ItemsManagement::with('issue_details')->get();
 //        dd($stocks);
         //dd($stocks);
         $fiscal_year = FiscalYear::where('status',1)->first();
@@ -41,10 +42,11 @@ class IssuesController extends Controller
         return view('issues.create',compact('stocks','fiscal_year','departments'));
     }
 
-    public function get_items_edition(Request $request,$items_managements_id)
+    public function get_items_edition(Request $request,$issue_details_id)
     {
-        $items_management = ItemsManagement::where('id',$items_managements_id)->first();
-        return json_encode($items_management);
+//        $items_management = ItemsManagement::where('id',$items_managements_id)->first();
+        $issue_detail = IssueDetail::where('id',$issue_details_id)->first();
+        return json_encode($issue_detail);
     }
 
     public function update_items_management($id,$qty,$from_dep_id)

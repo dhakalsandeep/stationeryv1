@@ -15,7 +15,7 @@ class CreateItemsRoomRacksTable extends Migration
     {
         Schema::create('items_room_racks', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->integer('items_managements_id');
+            $table->integer('issue_details_id');
             $table->string('room_no',3);
             $table->string('rack_no',10);
             $table->integer('qty');
@@ -23,7 +23,7 @@ class CreateItemsRoomRacksTable extends Migration
             $table->integer('company_infos_id');
             $table->timestamps();
 
-            $table->index('items_managements_id');
+            $table->index('issue_details_id');
             $table->index('company_infos_id');
         });
     }

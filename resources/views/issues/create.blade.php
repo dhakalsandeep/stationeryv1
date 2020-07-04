@@ -7,7 +7,6 @@
         <form action="{{route('issue.store')}}" enctype="multipart/form-data" id="issue_form" method="post">
             @csrf
             <div class="row">
-                <div class="d-flex">
                     <div class="form-group col-2 row justify-content-center">
                         <label for="fiscal_year">Fiscal Year</label>
                         <input id="fiscal_year"
@@ -68,72 +67,61 @@
                         </span>
                         @enderror
                     </div>
-                </div>
             </div>
 
-            <div class="row">
-                <div class="d-flex issue-detail">
-                    <div class="form-group col-md-6 row">
-                        <label for="item">Item Name</label>
-                        <select class="form-control" name="items_management_id[]" id="items_management_id">
-                            <option value="">...............</option>
-                            @foreach($stocks as $stock)
-                                <option value="{{$stock->id}}">{{ $stock->item->name }}|{{ $stock->edition }}|{{ $stock->cur_qty }}</option>
-                            @endforeach
-                        </select>
-                        @error('item')
-                        <span class="invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
-                        </span>
-                        @enderror
-                    </div>
+            <div class="row issue-detail">
+                <div class="form-group col-md-6 row">
+                    <label for="item">Item Name</label>
+                    <select class="form-control" name="issue_details_id[]" id="issue_details_id">
+                        <option value="">...............</option>
+                        @foreach($stocks as $stock)
+                            <option value="{{$stock->id}}">{{ $stock->item->name }}|{{ $stock->edition }}|{{ $stock->cur_qty }}</option>
+                        @endforeach
+                    </select>
+                    @error('item')
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                    @enderror
+                </div>
 
-                    <div class="form-group col-md-4 row pl-3">
-                        <label for="edition">Edition</label>
-                        <input id="edition"
-                               name="edition[]"
-                               type="text"
-                               class="form-control"
-                               value="{{ old('edition') }}"
-                               autocomplete="edition" autofocus>
-                        @error('edition')
-                        <span class="invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
-                        </span>
-                        @enderror
-                    </div>
+                <div class="form-group col-md-4 row pl-3">
+                    <label for="edition">Edition</label>
+                    <input id="edition"
+                           name="edition[]"
+                           type="text"
+                           class="form-control"
+                           value="{{ old('edition') }}"
+                           autocomplete="edition" autofocus>
+                    @error('edition')
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                    @enderror
+                </div>
 
-                    <div class="form-group col-md-2 row pl-3">
-                        <label for="qty">Qty</label>
-                        <input id="qty"
-                               name="qty[]"
-                               type="number"
-                               max="10"
-                               onkeypress="return (event.charCode == 8 || event.charCode == 0 || event.charCode == 13) ? null : event.charCode >= 48 && event.charCode <= 57"
-                               class="form-control"
-                               value="{{ old('qty') }}"
-                               autocomplete="qty" autofocus>
-                        @error('qty')
-                        <span class="invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
-                        </span>
-                        @enderror
-                        <button class="btn btn-danger btn-xs" id="removeDetail" style="position: absolute;right: -14px;bottom: 9px;"><i class="fa fa-times"></i></button>
-                    </div>
+                <div class="form-group col-md-2 row pl-3">
+                    <label for="qty">Qty</label>
+                    <input id="qty"
+                           name="qty[]"
+                           type="number"
+                           max="10"
+                           onkeypress="return (event.charCode == 8 || event.charCode == 0 || event.charCode == 13) ? null : event.charCode >= 48 && event.charCode <= 57"
+                           class="form-control"
+                           value="{{ old('qty') }}"
+                           autocomplete="qty" autofocus>
+                    @error('qty')
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                    @enderror
+                    <button class="btn btn-danger btn-xs" id="removeDetail" style="position: absolute;right: -14px;bottom: 9px;"><i class="fa fa-times"></i></button>
                 </div>
 
                 <div class="add-detail-btn-wrapper" style="width: 100%;">
                     <button class="btn btn-primary btn-xs" id="addDetail"><i class="fa fa-plus"></i> </button>
                 </div>
 
-
-{{--            <div class="col-md-12 row">--}}
-{{--                <div class="form-group d-flex pt-4">--}}
-{{--                    <button type="submit" name="btn_save_data" id="btn_save_data" class="btn btn-primary">--}}
-{{--                        <i class="fa fa-save"></i> Save--}}
-{{--                    </button>--}}
-{{--                </div>--}}
-{{--            </div>--}}
                 <div class="form-group pt-4">
                     <button type="submit" name="btn_save_data" id="btn_save_data" class="btn btn-primary">
                         <i class="fa fa-save"></i> Save
@@ -155,11 +143,9 @@
             $('#issue_date').val(date_roman);
             console.log($('#issue_date').val());
             $('#issue_form').submit();
-
-
         })
     </script>
-    {{--Convert Nepali date to roman date --}}
+    Convert Nepali date to roman date
     <script>
         function convertNepaliToEnglish(input) {
             // console.log(input);
@@ -208,7 +194,7 @@
         }
     </script>
 
-    {{-- Add and remove issue detail--}}
+{{--     Add and remove issue detail--}}
     <script>
         console.clear();
         $('#addDetail').click(function (e) {
@@ -231,7 +217,7 @@
         });
     </script>
 
-    {{-- Nepali Date picker--}}
+{{--     Nepali Date picker--}}
     <script>
         $("#issue_date").nepaliDatePicker({
             dateFormat: "%y-%m-%d",
@@ -247,39 +233,37 @@
         $("#issue_date").val(formatedNepaliDate);
     </script>
 
-    {{-- Nepali Date Picker --}}
-    <script>
-        $("#received_date").nepaliDatePicker({
-            dateFormat: "%y-%m-%d",
-            closeOnDateSelect: true
-        });
 
-        var currentDate = new Date();
-        var currentNepaliDate = calendarFunctions.getBsDateByAdDate(currentDate.getFullYear(), currentDate.getMonth() + 1, currentDate.getDate());
-        var formatedNepaliDate = calendarFunctions.bsDateFormat("%y-%m-%d", currentNepaliDate.bsYear, currentNepaliDate.bsMonth, currentNepaliDate.bsDate);
-        $("#received_date").val(formatedNepaliDate);
-    </script>
-
-    {{-- On change Item change--}}
+{{--     On change Item change--}}
     <script>
-        $(document).on('change', '#items_management_id', function () {
+        $(document).on('change', '#issue_details_id', function () {
             let $div = $(this).closest('.issue-detail');
-            let items_management_id = $div.find('#items_management_id').val();
+            let issue_details_id = $div.find('#issue_details_id').val();
             let url = '{{route('get.items.edition',123)}}';
-            url = url.replace('123', items_management_id);
+            url = url.replace('123', issue_details_id);
+            console.log(url);
             $.ajax({
                 method: 'get',
                 url: url,
                 success: function (res) {
                     if (res != '') {
                         let stock = jQuery.parseJSON(res);
-                        console.log(stock.edition);
+                        console.log(stock);
                         $div.find("#edition").val(stock.edition);
                         $div.find("#qty").val(stock.cur_qty);
                         $div.find("#qty").attr({
                             "max" : stock.cur_qty,
                             "min" : 1
                         });
+                        console.log($div.find( "#issue_details_id option:selected" ).text());
+                        // $( "#myselect option:selected" ).text();
+
+                        let str = $div.find( "#issue_details_id option:selected" ).text();
+                        let n = str.indexOf("|");
+                        let issue_details = str.split("|");
+                        let issue_detail_text = issue_details[0];
+                        console.log(issue_detail_text);
+                        $div.find("#issue_details_id option:selected").text(issue_detail_text);
                     } else {
                         $('input#edition').val('');
                     }
@@ -290,23 +274,25 @@
         })
     </script>
 
-    {{-- On From Department change--}}
+{{--     On From Department change--}}
     <script>
         $(document).on('change', '#from_department_id', function () {
             let from_dep_id = $('#from_department_id').val();
-            if (from_dep_id === 1) {
+            console.log(from_dep_id);
+            if (from_dep_id == 1) {
                 $('select#to_department_id').val(2);
             }
-            else if (from_dep_id === 2) {
+            else if (from_dep_id == 2) {
                 $('select#to_department_id').val(1);
             }
             else {
                 $('select#to_department_id').val(0);
             }
+            console.log($('select#to_department_id').val());
         })
     </script>
 
-    {{-- On To Department change--}}
+{{--     On To Department change--}}
     <script>
         $(document).on('change', '#to_department_id', function () {
             let to_dep_id = $('#to_department_id').val();

@@ -8,8 +8,8 @@ class ItemsRoomRack extends Model
 {
     protected $guarded = [];
 
-    public function items_managements()
+    public function issue_details()
     {
-        return $this->hasOne(ItemsManagement::class);
+        return $this->hasOne(IssueDetail::class);
     }
 }

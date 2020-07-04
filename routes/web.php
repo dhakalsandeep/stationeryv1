@@ -85,3 +85,8 @@ Route::post('/purchase-detail-report/print', 'PurchaseDetailReportsController@pr
 //Route::post('/purchase-detail-report/print', function (){
 //    return "Success";
 //})->name('purchase.detail.report.print');
+
+//Stock Aging Report
+Route::get('/stock-aging-report','StockAgingReportsController@index')->name('stock.aging.report.index');
+Route::get( '/stock-aging-report/fetch_data', 'StockAgingReportsController@fetch_data')->name('get.stock.aging.reports.fetchdata');
+Route::post('/stock-aging-report/print', 'StockAgingReportsController@print_purchase_detail_report')->name('stock.aging.report.print');

@@ -72,7 +72,7 @@
                 <table class="table table-bordered table-striped table-hover datatable" id="datatable">
                     <thead>
                     <tr>
-{{--                        <th ></th>--}}
+{{--                        <th></th>--}}
 {{--                        <th style="display: none"></th>--}}
                         <th>R. Date</th>
                         <th>Inv. No</th>
@@ -88,27 +88,7 @@
                         <th>Total</th>
                     </tr>
                     </thead>
-{{--                    <tbody>--}}
-{{--                    @foreach($purchase_details as $purchase_detail)--}}
-{{--                        <tr>--}}
-{{--                            <td></td>--}}
-{{--                            <td>{{$purchase_detail->received_date}}</td>--}}
-{{--                            <td>{{$purchase_detail->purchase_no}}</td>--}}
-{{--                            <td>{{$purchase_detail->supplier_bill_no}}</td>--}}
-{{--                            <td>{{$purchase_detail->code}}</td>--}}
-{{--                            <td>{{$purchase_detail->items_name}}</td>--}}
-{{--                            <td>{{$purchase_detail->type}}</td>--}}
-{{--                            <td>{{$purchase_detail->supplier_name}}</td>--}}
-{{--                            <td>{{$purchase_detail->qty}}</td>--}}
-{{--                            <td>{{$purchase_detail->rate}}</td>--}}
-{{--                            <td>{{$purchase_detail->dis_per}}</td>--}}
-{{--                            <td>{{$purchase_detail->vat}}</td>--}}
-{{--                            <td>{{$purchase_detail->total_amount}}</td>--}}
-{{--                        </tr>--}}
-{{--                    @endforeach--}}
-{{--                    </tbody>--}}
                 </table>
-{{--                {{ csrf_field() }}--}}
             </div>
         </div>
     </div>
@@ -166,15 +146,7 @@
     <script>
         $(function () {
             let dtButtons = [];
-            // $('#datatable').DataTable({ buttons: dtButtons });
-            // $('.select-checkbox').css('display','none');
             var date = new Date();
-            console.log(date);
-
-
-            // var _token = $('input[name="_token"]').val();
-
-            console.log(_token);
             $.ajaxSetup({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -203,6 +175,7 @@
 
                     },
                     columns:[
+                        // {data: "check_box",name:"check_box"},
                         { data: "received_date",name: "received_date" },
                         { data: "purchase_no",name: "purchase_no" },
                         { data: "supplier_bill_no",name: "supplier_bill_no" },
@@ -216,8 +189,11 @@
                         { data: "vat",name: "vat" },
                         { data: "total_amount",name: "total_amount" },
                         // { data: "last_name",name: "last_name" },
-                    ]
+                    ],
                 });
+                // $('#datatable').DataTable().$('.select-checkbox').prop('disabled', false);
+                // $('.select-checkbox').css('display','none');
+                // $('tbody','tr','td').removeClass("select-checkbox");
             }
 
             $('#btn_get_data').click(function(){
@@ -233,8 +209,8 @@
                 {
                     alert('Both Date is required');
                 }
-                // $('#datatable').DataTable().draw(true);
-                // $('.select-checkbox').css('display','none');
+                $('#datatable').DataTable().draw(true);
+
             });
         })
     </script>

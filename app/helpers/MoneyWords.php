@@ -2,17 +2,7 @@
 
 namespace App\helpers;
 
-use App\FiscalYear;
-
-class FiscalYearHelper
-{
-    public function get_active_fiscal_year() {
-
-       return $fiscal_year = FiscalYear::where('status',1)->first();
-    }
-}
-
-class Money_words {
+class MoneyWords {
 
     private $sequence = [
         0 =>"शुन्य",        //0   =>
@@ -119,43 +109,42 @@ class Money_words {
     ];
 
     public function convert_number($number) {
-
         $source = $number;
         if (($number < 0) || ($number > 999999999)) {
             throw new Exception("Number $number is out of range");
         }
 
         /*
-         * करोड अंश
-         */
+        * करोड अंश
+        */
         $Tn     = floor($number / 10000000);
 
         /*
-         * लाख अंश
-         */
+        * लाख अंश
+        */
         $number -= $Tn * 10000000;
         $Gn     = floor($number / 100000);
 
         /*
-         * हजार अंश
-         */
+        * हजार अंश
+        */
         $number -= $Gn * 100000;
         $kn     = floor($number / 1000);
 
         /*
-         * हजार अंश
-         */
+        * हजार अंश
+        */
         $number -= $kn * 1000;
         $Hn     = floor($number / 100);
 
         /*
-         * सय अंश
-         */
+        * सय अंश
+        */
         $number -= $Hn * 100;
 
         /*
-         * पैसा अंश
-         */
+        * पैसा अंश
+        */
         $whole    = floor($source);
         $fraction = number_format($source - $whole,2);
         $fraction = $fraction*100;

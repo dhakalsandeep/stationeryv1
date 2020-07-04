@@ -61,13 +61,13 @@ class ItemsController extends Controller
         }
 
         $item = new Item();
-        $item->code = $request->code;
-        $item->name = $request->name;
+        $item->code = strtoupper($request->code);
+        $item->name = ucwords($request->name);
         $item->items_types_id = $request->items_types_id;
         $item->isbn = $request->isbn ?? '';
         $item->print_date = $request->print_date ?? '';
         $item->revised_date = $request->print_date ?? '';
-        $item->author = $request->author ?? '';
+        $item->author = ucwords($request->author) ?? '';
         $item->publishers_id = $request->publishers_id ?? '';
         $item->users_id = auth()->user()->id;
         $item->company_infos_id = auth()->user()->company_infos_id;

@@ -8,15 +8,14 @@
         <div class="card-header">
             <form action="/stock-aging-report/print" enctype="multipart/form-data" method="post">
                 @csrf
-                <div class="row">
+                <div class="row" style="margin: 0 auto;justify-content: space-between;">
                     <div class="form-group col-2 row justify-content-center">
                         <label for="range_day_one">Range Day One</label>
                         <input id="range_day_one"
                                name="range_day_one"
                                type="number"
-                               max="10"
                                onkeypress="return (event.charCode == 8 || event.charCode == 0 || event.charCode == 13) ? null : event.charCode >= 48 && event.charCode <= 57"
-                               class="form-control"
+                               class="form-control text-center"
                                value="{{ old('range_day_one') }}"
                                autocomplete="range_day_one" autofocus>
                         @error('range_day_one')
@@ -25,14 +24,13 @@
                     </span>
                         @enderror
                     </div>
-                    <div class="form-group col-2 row ml-1 justify-content-center">
+                    <div class="form-group col-2 row justify-content-center">
                         <label for="range_day_two">Range Day Two</label>
                         <input id="range_day_two"
                                name="range_day_two"
                                type="number"
-                               max="10"
                                onkeypress="return (event.charCode == 8 || event.charCode == 0 || event.charCode == 13) ? null : event.charCode >= 48 && event.charCode <= 57"
-                               class="form-control"
+                               class="form-control text-center"
                                value="{{ old('range_day_two') }}"
                                autocomplete="range_day_two" autofocus>
                         @error('range_day_two')
@@ -41,14 +39,13 @@
                     </span>
                         @enderror
                     </div>
-                    <div class="form-group col-2 row ml-1 justify-content-center">
+                    <div class="form-group col-2 row justify-content-center">
                         <label for="range_day_three">Range Day Three</label>
                         <input id="range_day_three"
                                name="range_day_three"
                                type="number"
-                               max="10"
                                onkeypress="return (event.charCode == 8 || event.charCode == 0 || event.charCode == 13) ? null : event.charCode >= 48 && event.charCode <= 57"
-                               class="form-control"
+                               class="form-control text-center"
                                value="{{ old('range_day_three') }}"
                                autocomplete="range_day_three" autofocus>
                         @error('range_day_three')
@@ -58,12 +55,12 @@
                         @enderror
                     </div>
 
-                    <div class="form-group col-3 row ml-1">
+                    <div class="form-group col-3 row">
                         <label for="btn_get_data">&nbsp</label>
                         <input type="button" id="btn_get_data" value="Get"
                                class="form-control btn btn-primary" autofocus>
                     </div>
-                    <div class="form-group col-3 row ml-1">
+                    <div class="form-group col-3 row">
                         <label for="btn_print_data">&nbsp</label>
                         <input type="submit" id="btn_print_data" value="Print"
                                class="form-control btn btn-primary" autofocus>

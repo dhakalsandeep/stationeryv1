@@ -32,6 +32,7 @@ class CreatePurchaseMastersTable extends Migration
             $table->integer('users_id');
             $table->integer('company_infos_id');
             $table->string('is_payment_done',1)->default('N');
+            $table->integer('status')->default(1);
             $table->timestamps();
 
             $table->index('company_infos_id');

@@ -1,19 +1,9 @@
 <?php
 
-use App\User;
-use Illuminate\Support\Str;
-use Faker\Generator as Faker;
+/** @var \Illuminate\Database\Eloquent\Factory $factory */
 
-/*
-|--------------------------------------------------------------------------
-| Model Factories
-|--------------------------------------------------------------------------
-|
-| This directory should contain each of the model factory definitions for
-| your application. Factories provide a convenient way to generate new
-| model instances for testing / seeding your application's database.
-|
-*/
+use App\Model;
+use Faker\Generator as Faker;
 
 $factory->define(User::class, function (Faker $faker) {
     return [
@@ -24,3 +14,16 @@ $factory->define(User::class, function (Faker $faker) {
         'remember_token' => Str::random(10),
     ];
 });
+
+//$factory->define(\App\Supplier::class, function (Faker $faker) {
+//    return [
+//        'name' => $faker->name,
+//        'address' => $faker->address,
+//        'phoneno' => $faker->phoneNumber,
+//        'email' => $faker->email,
+//        'users_id' => 1,
+//        'company_infos_id' => 1,
+//        'created_at'       => '2019-04-15 19:13:32',
+//        'updated_at'       => '2019-04-15 19:13:32',
+//    ];
+//});

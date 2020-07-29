@@ -43,6 +43,15 @@ Route::get('/purchase/print/{id}', 'PurchasesController@print_purchase')->name('
 Route::post('/purchase/{purchase}', 'PurchasesController@update')->name('purchase.update');
 Route::get('/purchase/purchase-no', 'PurchasesController@get_new_purchase_no')->name('get.purchase.no');
 
+//Purchase Return
+Route::get('/purchase-return','PurchaseReturnController@index')->name('purchase.return.index');
+Route::get('/purchase-return/create/{id}', 'PurchaseReturnController@create')->name('purchase.return.create');
+Route::get('/purchase-return/{purchase}/edit', 'PurchaseReturnController@edit')->name('purchase.return.edit');
+Route::post('/purchase-return', 'PurchaseReturnController@store')->name('purchase.return.store');
+Route::get('/purchase-return/print/{id}', 'PurchaseReturnController@print_purchase')->name('purchase.return.print');
+Route::post('/purchase-return/{purchase}', 'PurchaseReturnController@update')->name('purchase.return.update');
+Route::get('/purchase-return/purchase-no', 'PurchaseReturnController@get_new_purchase_no')->name('get.purchase.return.no');
+
 //Issue
 Route::get('/issue','IssuesController@index')->name('issue.index');
 Route::get('/issue/create', 'IssuesController@create')->name('issue.create');
@@ -51,6 +60,7 @@ Route::post('/issue', 'IssuesController@store')->name('issue.store');
 Route::get('/issue/print/{id}', 'IssuesController@print_issue')->name('issue.print');
 Route::post('/issue/{issue}', 'IssuesController@update')->name('issue.update');
 Route::get('/issue/issue-no', 'IssuesController@get_new_issue_no')->name('get.issue.no');
+Route::get('/issue/items-stocks/{id}', 'IssuesController@get_stocks')->name('get.stocks');
 Route::get('/issue/items-edition/{id}', 'IssuesController@get_items_edition')->name('get.items.edition');
 
 //Suppliers
@@ -90,3 +100,14 @@ Route::post('/purchase-detail-report/print', 'PurchaseDetailReportsController@pr
 Route::get('/stock-aging-report','StockAgingReportsController@index')->name('stock.aging.report.index');
 Route::get( '/stock-aging-report/fetch_data', 'StockAgingReportsController@fetch_data')->name('get.stock.aging.reports.fetchdata');
 Route::post('/stock-aging-report/print', 'StockAgingReportsController@print_purchase_detail_report')->name('stock.aging.report.print');
+
+//Current Stock Report
+Route::get('/current-stock-report','CurrentStocksReportsController@index')->name('current.stock.report.index');
+Route::get( '/current-stock-report/fetch_data', 'CurrentStocksReportsController@fetch_data')->name('get.current.stock.report.fetchdata');
+Route::post('/current-stock-report/print', 'CurrentStocksReportsController@print_purchase_detail_report')->name('current.stock.report.print');
+
+//Supplier Wise Purchase Report
+Route::get('/supplier-wise-purchase-report','SupplierWisePurchaseReportsController@index')->name('supplier.wise.purchase.report.index');
+Route::get( '/supplier-wise-purchase-report/fetch_data', 'SupplierWisePurchaseReportsController@fetch_data')->name('get.supplier.wise.purchase.report.fetchdata');
+Route::get( '/supplier-wise-purchase-report/get_details', 'SupplierWisePurchaseReportsController@get_details_data')->name('get.supplier.wise.purchase.report.getdetails');
+Route::post('/supplier-wise-purchase-report/print', 'SupplierWisePurchaseReportsController@print_purchase_detail_report')->name('supplier.wise.purchase.report.print');

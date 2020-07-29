@@ -2,15 +2,13 @@
 @section('page_header')
 Items
 @stop
-{{--@section('content')--}}
-{{--    <div class="container-fluid">--}}
-{{--        <a type="button" href="{{route('item.create')}}" class="btn btn-primary" style="float:right; margin-bottom: 10px; color: #fff">Add New Item</a>--}}
 @section('content')
     @can('item_create')
         <div style="margin-bottom: 10px;" class="row">
             <div class="col-lg-12">
-                <a class="btn btn-success" href="{{ route("item.create") }}">
-                    {{ trans('global.add') }} {{ trans('global.item.title_singular') }}
+                <a class="form-control btn btn-success" href="{{ route("item.create") }}">
+                    <i class="fa fa-plus"></i>
+                    {{ trans('global.add') }} New {{ trans('global.item.title_singular') }}
                 </a>
             </div>
         </div>
@@ -24,6 +22,7 @@ Items
                             <th>Code</th>
                             <th>Items Name</th>
                             <th>Items Type</th>
+                            <th>R.O. Level</th>
                             <th>Author</th>
                             <th>Publisher</th>
                             <th>Action</th>
@@ -34,10 +33,11 @@ Items
                         <tr>
                             <td>{{$item->code}}</td>
                             <td>{{$item->name}}</td>
-                            <td>{{$item->itemType->type}}</td>
+                            <td>{{$item->type}}</td>
+                            <td class="text-right">{{$item->ro_level}}</td>
                             <td>{{$item->author}}</td>
-                            <td>{{$item->publisher->name}}</td>
-                            <td><a type="button" href="/item/{{$item->id}}/edit" class="btn btn-primary">Edit</a></td>
+                            <td>{{$item->publisher_name}}</td>
+                            <td><a type="button" href="/item/{{$item->id}}/edit" class="btn btn-primary btn-sm">Edit</a></td>
                         </tr>
                     @endforeach
                     </tbody>

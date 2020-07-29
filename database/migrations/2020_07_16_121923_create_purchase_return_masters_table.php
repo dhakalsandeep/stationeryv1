@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreatePurchaseDetailsTable extends Migration
+class CreatePurchaseReturnMastersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,15 @@ class CreatePurchaseDetailsTable extends Migration
      */
     public function up()
     {
-        Schema::create('purchase_details', function (Blueprint $table) {
+        Schema::create('purchase_return_masters', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->bigInteger('purchase_masters_id');
-            $table->string('purchase_no',25);
-            $table->integer('items_id');
-            $table->string('edition',100);
+            $table->unsignedBigInteger('purchase_master_id')->unsigned();
+            $table->string('return_date',10);
+            $table->string('return_date_ad',10);
+            $table->string('return_no',20);
+            $table->string('return_by',100);
+            $table->string('fiscal_year',6);
             $table->float('amount');
-            $table->integer('qty');
             $table->float('discount');
             $table->float('dis_per');
             $table->float('vat');
@@ -29,10 +30,10 @@ class CreatePurchaseDetailsTable extends Migration
             $table->integer('company_infos_id');
             $table->integer('status')->default(1);
             $table->timestamps();
+        });
 
-            $table->index('purchase_masters_id');
-            $table->index('users_id');
-            $table->index('company_infos_id');
+        Schema::table('purchase_return_masters', function (Blueprint $table) {
+            $table->foreign('purchase_master_id')->references('id')->on('purchase_masters');
         });
     }
 
@@ -43,6 +44,6 @@ class CreatePurchaseDetailsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('purchase_details');
+        Schema::dropIfExists('purchase_return_masters');
     }
 }

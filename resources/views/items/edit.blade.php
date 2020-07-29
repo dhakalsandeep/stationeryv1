@@ -78,6 +78,24 @@
                 </div>
 
                 <div class="form-group row">
+                    <label for="ro_level" class="col-md-4 col-form-label">Re-Order Level</label>
+                    <input id="ro_level"
+                           name="ro_level"
+                           type="number"
+                           onkeypress="return (event.charCode == 8 || event.charCode == 0 || event.charCode == 13) ? null : event.charCode >= 48 && event.charCode <= 57"
+                           class="form-control
+                        @error('ro_level') is-invalid
+                         @enderror"
+                           value="{{ $item->ro_level}}"
+                           autocomplete="ro_level" autofocus>
+                    @error('ro_level')
+                    <span class="invalid-feedback" role="alert">
+                    <strong>{{ $message }}</strong>
+                </span>
+                    @enderror
+                </div>
+
+                <div class="form-group row">
                     <label for="author" class="col-md-4 col-form-label">Author</label>
                     <input id="author"
                            name="author"

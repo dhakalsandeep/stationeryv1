@@ -21,6 +21,7 @@ class CreateItemsRoomRacksTable extends Migration
             $table->integer('qty');
             $table->integer('users_id');
             $table->integer('company_infos_id');
+            $table->integer('status')->default(1);
             $table->timestamps();
 
             $table->index('issue_details_id');

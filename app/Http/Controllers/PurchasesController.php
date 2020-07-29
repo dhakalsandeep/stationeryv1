@@ -119,7 +119,7 @@ class PurchasesController extends Controller
             $purchase_master->amount = $request->sub_total;
             $purchase_master->discount = $request->total_discount;
             $purchase_master->dis_per = $request->total_dis_per;
-            $purchase_master->vat = $request->total_vat;
+            $purchase_master->vat = $request->total_vat ?? 0;
             $purchase_master->total_amount = $request->grand_total;
             $purchase_master->users_id = auth()->user()->id;
             $purchase_master->company_infos_id = auth()->user()->company_infos_id;
@@ -135,7 +135,7 @@ class PurchasesController extends Controller
             $qtys = $request->get('qty');
             $discounts = $request->get('discount');
             $vats = $request->get('vat');
-            $totals = $request->get('total');
+//            dd($discounts);
 
             foreach ($items as $index => $item) {
                 $detail = [];
@@ -145,13 +145,18 @@ class PurchasesController extends Controller
                 $detail['edition'] = $editions[$index];
                 $detail['amount'] = $amounts[$index];
                 $detail['qty'] = $qtys[$index];
-                $detail['discount'] = $discounts[$index];
+                $detail['dis_per'] = $discounts[$index];
+//                $detail['discount'] = $discounts[$index];
 //                dd($discounts[$index]>0,$discounts[$index],$amounts[$index],$qtys[$index],($discounts[$index]/($amounts[$index]*$qtys[$index])));
                 if ($discounts[$index]>0) {
-                    $detail['dis_per'] = ($discounts[$index]/($amounts[$index]*$qtys[$index]))*100;
+                    $detail['discount'] = ($discounts[$index]/100*($amounts[$index]*$qtys[$index]));
+                }
+                else {
+                    $detail['discount'] = 0;
                 }
                 $detail['vat'] = $vats[$index];
-                $detail['total'] = $totals[$index];
+                $detail['total'] = $amounts[$index]*$qtys[$index]*(1-$discounts[$index]/100)*(1+$vats[$index]/100);
+//                dd($detail);
                 // create detail
 
                 $purchase_detail = new PurchaseDetail();
@@ -163,7 +168,7 @@ class PurchasesController extends Controller
                 $purchase_detail->qty = $detail['qty'];
                 $purchase_detail->discount = $detail['discount'];
                 $purchase_detail->dis_per = $detail['dis_per'] ?? 0;
-                $purchase_detail->vat = $detail['vat'];
+                $purchase_detail->vat = $detail['vat'] ?? 0;
                 $purchase_detail->total_amount = $detail['total'];
                 $purchase_detail->users_id = auth()->user()->id;
                 $purchase_detail->company_infos_id = auth()->user()->company_infos_id;

@@ -1,5 +1,12 @@
 {{--<input type="button" onclick="tableToExcel('tablename', 'name', 'myfile.xls')" value="Export to Excel">--}}
 @extends('layouts.adminReport')
+@section('styles')
+    <style>
+        table tr td {
+            padding: 0 0.5%;
+        }
+    </style>
+@stop
 <!-- Content Wrapper. Contains page content -->
 @section('content')
     <div class="content-wrapper">
@@ -11,8 +18,8 @@
                     <thead>
                         <tr><th style="text-align: center;width: 100%;font-weight: bold;font-size: 25px;">{{  $company_info->name }}</th></tr>
                         <tr><th style="text-align: center;width: 100%">{{  $company_info->address }}</th></tr>
-                        <tr><th style="text-align: center;width: 100%">Purchase Detail Report</th></tr>
-                        <tr><th style="text-align: center;width: 100%">Dates : {{ $from_date }}  -  {{$to_date}}</th></tr>
+                        <tr><th style="text-align: center;width: 100%">Stock Aging Report</th></tr>
+                        <tr><th style="text-align: center;width: 100%">Print Date : {{ Carbon\Carbon::today()->toDateString()  }}</th></tr>
                     </thead>
                     <tbody>
                     </tbody>
@@ -25,46 +32,55 @@
     <section class="content">
         <div class="panel panel-primary">
             <div class="panel-body" style="margin: 0 5%">
-                <table border="1" width="100%"  class="table table-bordered" id="purchaseDetailTable"
+                <table border="1" width="100%"  class="table table-bordered" id="stockAgingTable"
                        style="background-color:#dbdbdb; font-size: 16px">
-                    <thead>
+                    <thead class="text-center">
                     <tr>
-                        <th style="width: 5%">S. No.</th>
-                        <th>R. Date</th>
-                        <th>Inv. No</th>
-                        <th>S. BillNo</th>
-                        <th>Item Code</th>
-                        <th>Item Name</th>
-                        <th>Item Type</th>
-                        <th>Supplier</th>
-                        <th>Rate</th>
+                        <th rowspan="2"  style="vertical-align: middle;">SN</th>
+                        <th rowspan="2"  style="vertical-align: middle;">Code</th>
+                        <th rowspan="2"  style="vertical-align: middle;">Items Name</th>
+                        <th rowspan="2"  style="vertical-align: middle;">Edition</th>
+                        <th colspan="2" id="day_range_one">0 - {{ $range_days[0] }} Days</th>
+                        <th colspan="2" id="day_range_two">{{ $range_days[0] }} - {{ $range_days[1] }} Days</th>
+                        <th colspan="2" id="day_range_three">{{ $range_days[1] }} - {{ $range_days[2] }} Days</th>
+                        <th colspan="2" id="day_range_four">Above {{ $range_days[2] }} Days</th>
+                        <th colspan="2">Balance</th>
+                    </tr>
+                    <tr>
                         <th>Qty</th>
-                        <th>Discount(%)</th>
-                        <th>VAT(%)</th>
-                        <th>Total</th>
+                        <th>Amount</th>
+                        <th>Qty</th>
+                        <th>Amount</th>
+                        <th>Qty</th>
+                        <th>Amount</th>
+                        <th>Qty</th>
+                        <th>Amount</th>
+                        <th>Qty</th>
+                        <th>Amount</th>
                     </tr>
                     </thead>
                     <tbody>
-                    @foreach($purchase_details as $key =>$purchase_detail)
+                    @foreach($aging_details as $key =>$aging_detail)
                         <tr style="background-color: white;">
-                            <td style="text-align: right"><span style="padding-right: 5%">{{++$key}}</td>
-                            <td style="text-align: center"><span>{{$purchase_detail->received_date}}</td>
-                            <td style="text-align: center"><span>{{$purchase_detail->purchase_no}}</td>
-                            <td style="text-align: right;"><span style="padding-right: 5%">{{$purchase_detail->supplier_bill_no}}</td>
-                            <td style="text-align: left"><span style="padding-left: 5%">{{$purchase_detail->code}}</td>
-                            <td style="text-align: left"><span style="padding-left: 5%">{{$purchase_detail->items_name}}</td>
-                            <td style="text-align: left"><span style="padding-left: 5%">{{$purchase_detail->type}}</td>
-                            <td style="text-align: left"><span style="padding-left: 5%">{{$purchase_detail->supplier_name}}</td>
-                            <td style="text-align: right"><span style="padding-right: 5%">{{$purchase_detail->rate}}</td>
-                            <td style="text-align: right"><span style="padding-right: 5%">{{$purchase_detail->qty}}</td>
-                            <td style="text-align: right"><span style="padding-right: 5%">{{$purchase_detail->dis_per}}</td>
-                            <td style="text-align: right"><span style="padding-right: 5%">{{$purchase_detail->vat}}</span></td>
-                            <td style="text-align: right;"><span style="padding-right: 5%;">{{$purchase_detail->total_amount}}</span></td>
+                            <td style="text-align: right"><span>{{++$key}}</td>
+                            <td style="text-align: right"><span>{{$aging_detail->code}}</td>
+                            <td style="text-align: left"><span>{{$aging_detail->items_name}}</td>
+                            <td style="text-align: left;"><span>{{$aging_detail->edition}}</td>
+                            <td style="text-align: right"><span>{{$aging_detail->qty1}}</td>
+                            <td style="text-align: right"><span>{{$aging_detail->amount1}}</td>
+                            <td style="text-align: right"><span>{{$aging_detail->qty2}}</td>
+                            <td style="text-align: right"><span>{{$aging_detail->amount2}}</td>
+                            <td style="text-align: right"><span>{{$aging_detail->qty3}}</td>
+                            <td style="text-align: right"><span>{{$aging_detail->amount3}}</td>
+                            <td style="text-align: right"><span>{{$aging_detail->qty4}}</td>
+                            <td style="text-align: right"><span>{{$aging_detail->amount4}}</span></td>
+                            <td style="text-align: right"><span>{{$aging_detail->qty5}}</span></td>
+                            <td style="text-align: right;"><span >{{$aging_detail->amount5}}</span></td>
                         </tr>
                     @endforeach
                         <tr>
-                            <td colspan="12" style="text-align: right"><span style="padding-right: 5%">Total :</span></td>
-                            <td colspan="1" style="text-align: right" id="totalAmount"><span style="padding-right: 5%;">Total</span></td>
+                            <td colspan="13" style="text-align: right"><span>Total :</span></td>
+                            <td colspan="1" style="text-align: right" id="totalAmount"><span>Total</span></td>
                         </tr>
                     </tbody>
                 </table>
@@ -96,15 +112,14 @@
         }
     })()
 
-    let sumTotal,columnCount,purchaseDetailTable;
+    let sumTotal,columnCount,stockAgingTable;
     sumTotal = 0;
-    columnCount = document.getElementById('purchaseDetailTable').rows[0].cells.length;
-    purchaseDetailTable = document.getElementById('purchaseDetailTable');
-    // console.log(purchaseDetailTable.rows[13].cells[columnCount-1].innerHTML);
-    for (let i =1; i < purchaseDetailTable.rows.length-1; i++) {
-        sumTotal += parseFloat(purchaseDetailTable.rows[i].cells[columnCount-1].innerText);
+    stockAgingTable = document.getElementById('stockAgingTable');
+    columnCount = stockAgingTable.rows[2].cells.length;
+    for (let i =2; i < stockAgingTable.rows.length-1; i++) {
+        sumTotal += parseFloat(stockAgingTable.rows[i].cells[columnCount-1].innerText);
         console.log(sumTotal);
     }
-    document.getElementById("totalAmount").innerHTML = `<span style="padding-right: 5%">${sumTotal.toFixed(2)}<span>` ;
+    document.getElementById("totalAmount").innerHTML = `<span>${sumTotal.toFixed(2)}<span>` ;
 </script>
 @endsection

@@ -6,6 +6,7 @@ use App\Item;
 use App\ItemsType;
 use App\Publisher;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ItemsController extends Controller
 {
@@ -17,7 +18,13 @@ class ItemsController extends Controller
     public function index()
     {
         //$items = Item::where('users_id',auth()->user()->id)->latest()->paginate(20);
-        $items = Item::where('company_infos_id',auth()->user()->company_infos_id)->get();
+//        $items = Item::where('company_infos_id',auth()->user()->company_infos_id)->get();
+        $items = DB::table('items as i')
+            ->join('publishers as p','i.publishers_id','=','p.id')
+            ->join('items_types as it','i.items_types_id','=','it.id')
+            ->selectRaw('i.id, i.code, i.name,it.type, i.ro_level, p.name as publisher_name,i.author')
+            ->get();
+//        dd($items);
         return view('items.index',compact('items'));
     }
 
@@ -64,6 +71,7 @@ class ItemsController extends Controller
         $item->code = strtoupper($request->code);
         $item->name = ucwords($request->name);
         $item->items_types_id = $request->items_types_id;
+        $item->ro_level = $request->ro_level;
         $item->isbn = $request->isbn ?? '';
         $item->print_date = $request->print_date ?? '';
         $item->revised_date = $request->print_date ?? '';
@@ -105,6 +113,7 @@ class ItemsController extends Controller
         $item->code = $request->code;
         $item->name = $request->name;
         $item->items_types_id = $request->items_types_id;
+        $item->ro_level = $request->ro_level;
         $item->isbn = $request->isbn ?? '';
         $item->author = $request->author ?? '';
         $item->publishers_id = $request->publishers_id ?? '';

@@ -17,6 +17,7 @@ class CreateItemsTable extends Migration
             $table->bigIncrements('id');
             $table->string('code',10);
             $table->string('name',100);
+            $table->integer('ro_level')->default(10);
             $table->string('isbn',20);
             $table->string('print_date',20);
             $table->string('revised_date',20);
@@ -26,6 +27,7 @@ class CreateItemsTable extends Migration
             $table->integer('users_id');
             $table->integer('company_infos_id');
             $table->integer('modify_by_id')->default(0);
+            $table->integer('status')->default(1);
             $table->timestamps();
 
             $table->index('items_types_id');

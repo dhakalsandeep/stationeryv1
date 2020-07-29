@@ -22,6 +22,7 @@ class CreatePublishersTable extends Migration
             $table->integer('user_id');
             $table->integer('company_infos_id');
             $table->integer('modify_by_id')->default(0);
+            $table->integer('status')->default(1);
             $table->timestamps();
 
             $table->index('user_id');

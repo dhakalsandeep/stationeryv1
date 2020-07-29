@@ -21,6 +21,7 @@ class CreateSuppliersTable extends Migration
             $table->string('email',100)->nullable();
             $table->integer('users_id');
             $table->integer('company_infos_id');
+            $table->integer('status')->default(1);
             $table->timestamps();
 
             $table->index('users_id');

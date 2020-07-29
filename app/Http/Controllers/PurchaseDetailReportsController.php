@@ -18,53 +18,12 @@ class PurchaseDetailReportsController extends Controller
 
     public function index(Request $request)
     {
-//        dd($request->from_date,$request->to_date);
-//        if(!empty($request->from_date))
-//        {
-//            //                dd($request->from_date);
-//            $data = DB::table('purchase_masters as pm')
-//            ->join('purchase_details as pd', 'pm.id', '=', 'pd.purchase_masters_id')
-//            ->join('items as it', 'pd.items_id', '=', 'it.id')
-//            ->join('items_types as itt', 'it.items_types_id', '=', 'itt.id')
-//            ->join('suppliers as sp', 'pm.suppliers_id', '=', 'sp.id')
-//            ->select('pm.received_date_ad as received_date', 'pm.purchase_no',
-//            'pm.supplier_bill_no','it.code','it.name as items_name','itt.type',
-//            'sp.name as supplier_name','pd.qty','pd.amount as rate','pd.dis_per','pd.vat',
-//            'pd.total_amount')
-//            ->whereBetween('received_date_ad', [$request->from_date, $request->to_date])
-//            ->where('pm.company_infos_id',auth()->user()->company_infos_id)
-//            ->orderBy('pm.created_at', 'asc')
-//            ->get();
-//
-//        }
-//        else {
-//            $from_date = Carbon::now();
-//            $from_date = $from_date->toDateString();
-//            $to_date = Carbon::now();
-//            $to_date = $to_date->toDateString();
-//            $data = DB::table('purchase_masters as pm')
-//            ->join('purchase_details as pd', 'pm.id', '=', 'pd.purchase_masters_id')
-//            ->join('items as it', 'pd.items_id', '=', 'it.id')
-//            ->join('items_types as itt', 'it.items_types_id', '=', 'itt.id')
-//            ->join('suppliers as sp', 'pm.suppliers_id', '=', 'sp.id')
-//            ->select('pm.received_date_ad as received_date', 'pm.purchase_no',
-//            'pm.supplier_bill_no','it.code','it.name as items_name','itt.type',
-//            'sp.name as supplier_name','pd.qty','pd.amount as rate','pd.dis_per','pd.vat',
-//            'pd.total_amount')
-//            ->whereBetween('received_date_ad', [$from_date, $to_date])
-//            ->where('pm.company_infos_id',auth()->user()->company_infos_id)
-//            ->orderBy('pm.created_at', 'asc')
-//            ->get();
-//        }
-//            return datatables()->of($data)->make(true);
         return view('reports.purchasereports.index');
-
     }
 
     public function fetch_data(Request $request)
     {
-//        dd($request->ajax());
-//        if($request->ajax())
+        if($request->ajax())
         {
             if($request->from_date != '' && $request->to_date != '')
             {
@@ -77,7 +36,6 @@ class PurchaseDetailReportsController extends Controller
                 $data = $this->get_data($from_date,$from_date);
             }
             return datatables()->of($data)->make(true);
-//            return json_encode($data);
         }
     }
 
@@ -97,31 +55,6 @@ class PurchaseDetailReportsController extends Controller
             ->orderBy('pm.created_at', 'asc')
             ->get();
     }
-
-
-
-//    public function index1(Request $request)
-//    {
-//        $from_date = Carbon::now();
-//        $from_date = $from_date->toDateString();
-//        $to_date = Carbon::now();
-//        $to_date = $to_date->toDateString();
-//        $purchase_details = DB::table('purchase_masters as pm')
-//            ->join('purchase_details as pd', 'pm.id', '=', 'pd.purchase_masters_id')
-//            ->join('items as it', 'pd.items_id', '=', 'it.id')
-//            ->join('items_types as itt', 'it.items_types_id', '=', 'itt.id')
-//            ->join('suppliers as sp', 'pm.suppliers_id', '=', 'sp.id')
-//            ->select('pm.received_date_ad as received_date', 'pm.purchase_no',
-//                'pm.supplier_bill_no','it.code','it.name as items_name','itt.type',
-//                'sp.name as supplier_name','pd.qty','pd.amount as rate','pd.dis_per','pd.vat',
-//                'pd.total_amount')
-//            ->whereBetween('received_date_ad', [$from_date, $to_date])
-//            ->where('pm.company_infos_id',auth()->user()->company_infos_id)
-//            ->orderBy('pm.created_at', 'asc')
-//            ->get();
-//
-//        return view('reports.purchasereports.index',compact('purchase_details'));
-//    }
 
     /**
      * Show the form for creating a new resource.

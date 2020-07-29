@@ -17,25 +17,25 @@
                     @csrf
                     <div class="row">
                         <div class="form-group col-6 pl-3 row form-check-inline">
-                            <label for="fiscal_year" class="col-3">Fiscal Year</label>
+                            <label for="fiscal_year" class="col-3" style="margin: auto 0;">Fiscal Year</label>
                             <input id="fiscal_year"
                                    name="fiscal_year"
                                    type="text"
-                                   class="pl-2 font-weight-bold text-center"
+                                   class="form-control pl-2 font-weight-bold text-center"
                                    style="width: 80px;"
                                    value="{{ $fiscal_year->fiscal_year }}"
                                    readonly
-                                   autocomplete="fiscal_year" autofocus>
+                                   autocomplete="fiscal_year">
                             @error('fiscal_year')
                             <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
                                 </span>
                             @enderror
                         </div>
-                        <div class="col-12 d-flex">
+                        <div class="col-12 d-flex" style="justify-content: space-between;">
                             <div class="form-group col-4 row">
                                 <label for="supplier">Supplier</label>
-                                <select class="form-control" name="suppliers_id" id="supplier">
+                                <select class="form-control" name="suppliers_id" id="supplier" autofocus>
                                     <option value=""></option>
                                     @foreach($suppliers as $supplier)
                                         <option value="{{$supplier->id}}">{{$supplier->name}}</option>
@@ -80,7 +80,7 @@
                             </div>
                         </div>
 
-                        <div class="col-md-12 d-flex">
+                        <div class="col-md-12 d-flex" style="justify-content: space-between;">
                             <div class="form-group col-4 row">
                                 <label for="purchase_no">Purchase No</label>
                                 <input id="purchase_no"
@@ -135,11 +135,47 @@
                     </div>
 
                     <div class="row">
-                        <div class="col-md-12 d-flex invoice-detail">
-                            <div class="form-group col-md-4 row">
-                                <label for="item">Item Name</label>
-                                <select class="form-control" name="item[]" id="item">
-                                    @foreach($items as $item)
+                        <div class="col-md-12 d-flex" style="justify-content: space-between;margin: auto 0;">
+                            <div class="form-group col-md-2 row" style="margin: auto 0;padding: 0;justify-content: center;">
+                                <label for="item" style="margin: auto 0;">Item Name</label>
+                            </div>
+
+                            <div class="form-group col-md-2 row" style="margin: auto 0;padding: 0;justify-content: center;">
+                                <label for="edition" style="margin: auto 0;">Edition</label>
+                            </div>
+
+                            <div class="form-group col-md-2 row" style="margin: auto 0;padding: 0;justify-content: center;">
+                                <label for="amount" style="margin: auto 0;">Amount</label>
+                            </div>
+
+
+                            <div class="form-group col-md-1 row" style="margin: auto 0;padding: 0;justify-content: center;">
+                                <label for="qty" style="margin: auto 0;">Qty</label>
+                            </div>
+
+                            <div class="form-group col-md-1 row" style="margin: auto 0;padding: 0;justify-content: center;">
+                                <label for="discount" style="margin: auto 0;">Discount(%)</label>
+                            </div>
+
+                            <div class="form-group col-md-1 row" style="margin: auto 0;padding: 0;justify-content: center;display: none;">
+                                <label for="vat" style="margin: auto 0;">VAT</label>
+                            </div>
+
+                            <div class="form-group col-md-2 row" style="margin: auto 0;padding: 0;justify-content: center;">
+                                <label for="total">Total</label>
+                            </div>
+                            <div class="form-group col-md-1 row" style="margin: auto 0;padding: 0;justify-content: center;">
+                                <label for="total">&nbsp</label>
+                        </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-12 d-flex invoice-detail mt-2" style="justify-content: space-between;margin: auto 0;">
+                            <div class="form-group col-md-2 row" style="margin: auto 0;padding: 0;">
+                                <select class="form-control" name="item[]" id="item" autofocus>
+                                <option disabled selected value>select an item</option>
+                                @foreach($items as $item)
                                         <option value="{{$item->id}}">{{$item->name}}</option>
                                     @endforeach
                                 </select>
@@ -149,9 +185,7 @@
                                 </span>
                                 @enderror
                             </div>
-
-                            <div class="form-group col-md-2 row pl-2">
-                                <label for="edition">Edition</label>
+                            <div class="form-group col-md-2 row" style="margin: auto 0;padding: 0;">
                                 <input id="edition"
                                        name="edition[]"
                                        type="text"
@@ -165,12 +199,11 @@
                                 @enderror
                             </div>
 
-                            <div class="form-group col-md-2 row pl-2">
-                                <label for="amount">Amount</label>
+                            <div class="form-group col-md-2 row" style="margin: auto 0;padding: 0;">
                                 <input id="amount"
                                        name="amount[]"
                                        type="number"
-                                       class="form-control"
+                                       class="form-control text-right"
                                        value="{{ old('amount') }}"
                                        autocomplete="amount" autofocus>
                                 @error('amount')
@@ -181,12 +214,11 @@
                             </div>
 
 
-                            <div class="form-group col-md-1 row pl-3">
-                                <label for="qty">Qty</label>
+                            <div class="form-group col-md-1 row" style="margin: auto 0;padding: 0;">
                                 <input id="qty"
                                        name="qty[]"
                                        type="number"
-                                       class="form-control"
+                                       class="form-control text-right"
                                        value="{{ old('qty') }}"
                                        autocomplete="qty" autofocus>
                                 @error('qty')
@@ -196,12 +228,11 @@
                                 @enderror
                             </div>
 
-                            <div class="form-group col-md-1 row pl-3">
-                                <label for="discount">Discount</label>
+                            <div class="form-group col-md-1 row" style="margin: auto 0;padding: 0;">
                                 <input id="discount"
                                        name="discount[]"
                                        type="number"
-                                       class="form-control"
+                                       class="form-control text-right"
                                        value="{{ old('discount') }}"
                                        autocomplete="discount" autofocus>
                                 @error('discount')
@@ -211,13 +242,12 @@
                                 @enderror
                             </div>
 
-                            <div class="form-group col-md-1 row pl-3">
-                                <label for="vat">VAT</label>
+                            <div class="form-group col-md-1 row" style="margin: auto 0;padding: 0;display: none;">
                                 <input id="vat"
                                        name="vat[]"
                                        type="number"
-                                       class="form-control"
-                                       value="{{ old('vat') }}"
+                                       class="form-control text-right"
+                                       value="{{ 0 }}"
                                        autocomplete="vat" autofocus>
                                 @error('vat')
                                 <span class="invalid-feedback" role="alert">
@@ -226,120 +256,140 @@
                                 @enderror
                             </div>
 
-                            <div class="form-group col-md-2 row pl-3">
-                                <label for="total">Total</label>
+                            <div class="form-group col-md-2 row" style="margin: auto 0;padding: 0;">
                                 <input id="total"
                                        name="total[]"
                                        type="number"
                                        step="0.01"
-                                       class="form-control totalAmount"
+                                       class="form-control text-right totalAmount"
                                        value="{{ old('total') }}"
-                                       autocomplete="total" autofocus>
+                                       autocomplete="total" disabled>
 
                                 @error('total')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
                                 </span>
                                 @enderror
-                                <button class="btn btn-danger btn-xs" id="removeDetail" style="position: absolute;right: -14px;bottom: 9px;"><i class="fa fa-times"></i></button>
+{{--                                <button class="btn btn-danger btn-xs" id="removeDetail" style="position: absolute;right: -14px;bottom: 9px;"><i class="fa fa-times"></i></button>--}}
+
+                            </div>
+                            <div class="form-group col-md-1 row" style="margin: auto 0;padding: 0;">
+{{--                                <button class="form-control btn btn-primary btn-xs" id="addDetail"><i class="fa fa-plus"></i> </button>--}}
+                                <button class="form-control btn btn-danger" id="removeDetail" disabled="true"><i class="fa fa-trash"></i></button>
 
                             </div>
                         </div>
 
-                        <div class="add-detail-btn-wrapper" style="width: 100%; text-align: right">
-                            <button class="btn btn-primary btn-xs" id="addDetail"><i class="fa fa-plus"></i> </button>
+                        <div class="col-md-12 add-detail-btn-wrapper pt-4" style="width: 100%; text-align: right">
+                            <button class="form-control btn btn-primary btn-xs" id="addDetail"><i class="fa fa-plus"></i> </button>
                         </div>
-                    </div>
 
+                    </div>
                     <div class="row">
-                        <table class="table table-borderless" style="width:100%">
-                            <tr>
-                                <td style="width: 75%; text-align: right"><label for="sub_total">Sub Total</label></td>
-                                <td style="width: 25%;text-align: right">
-                                    <input
-                                        id="sub_total"
-                                        name="sub_total"
-                                        type="number"
-                                        style="width: 40%;"
-                                        value="{{ old('sub_total') }}"
-                                        autocomplete="sub_total"
-                                        autofocus
-                                    />
-                                </td>
-                            </tr>
-                            <tr>
-                                <td style="width: 75%;text-align: right"><label for="discount">Discount</label></td>
-                                <td style="width: 25%;display: flex">
+                        <div class="col-md-12 d-flex mt-4" style="justify-content: flex-end;">
+                            <div class="col-md-10 row" style="justify-content: flex-end;padding-right: 2rem;">
+                                <label for="sub_total" style="margin: auto 0;"><span>Sub Total</span></label>
+                            </div>
+                            <div class="col-md-2" style="justify-content: flex-end; padding: 0;">
+                                <input
+                                    id="sub_total"
+                                    name="sub_total"
+                                    type="number"
+                                    class="form-control text-right"
+                                    value="{{ old('sub_total') }}"
+                                    autocomplete="sub_total"
+                                    autofocus
+                                />
+                            </div>
+                        </div>
+                        <div class="col-md-12 d-flex mt-4" style="justify-content: flex-end;">
+                            <div class="col-md-10 row" style="justify-content: flex-end;padding-right: 2rem;">
+                                <label for="total_discount" style="margin: auto 0;"><span>Discount</span></label>
+                            </div>
+                            <div class="col-md-2 d-flex" style="justify-content: flex-end; padding: 0;margin: auto 0;">
+                                <div class="col-md-7" style="justify-content: flex-end; padding: 0 1rem 0 0;">
                                     <input
                                         id="total_discount"
                                         name="total_discount"
                                         type="number"
-                                        class="pr-2"
-                                        style="margin-right:5px;"
+                                        class="form-control text-right"
                                         value="{{ old('discount') }}"
-                                        autocomplete="discount"
+                                        autocomplete="sub_total"
                                         autofocus
                                     />
+                                </div>
+                                <div class="col-md-4" style="justify-content: flex-end; padding: 0;">
                                     <input
                                         id="dis_per"
                                         name="total_dis_per"
                                         type="number"
                                         step="0.01"
-                                        class="pl-2"
-                                        style="margin-left:5px;"
+                                        class="form-control"
                                         value="{{ old('dis_per') }}"
                                         autocomplete="dis_per"
                                         autofocus
-                                    /><label class="float-left" style="width: 5%;">%</label>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td style="width: 75%; text-align: right"><label for="total">Total</label></td>
-                                <td style="width: 25%; text-align: right">
-                                    <input
-                                        id="sum_total"
-                                        name="total_total"
-                                        type="number"
-                                        value="{{ old('total') }}"
-                                        autocomplete="total"
-                                        autofocus
                                     />
-                                </td>
-                            </tr>
-                            <tr>
-                                <td style="width: 75%; text-align: right"><label for="vat">VAT</label></td>
-                                <td style="width: 25%; text-align: right">
-                                    <input
-                                        id="total_vat"
-                                        name="total_vat"
-                                        type="number"
-                                        value="{{ old('vat') }}"
-                                        autocomplete="vat"
-                                        autofocus
-                                    />
-                                    %
-                                </td>
-                            </tr>
-                            <tr>
-                                <td style="width: 75%; text-align: right">
-                                    <label for="grand_total">Grand Total</label>
-                                </td>
-                                <td style="width: 25%; text-align: right">
-                                    <input
-                                        id="grand_total"
-                                        name="grand_total"
-                                        type="number"
-                                        step="0.01"
-                                        value="{{ old('grand_total') }}"
-                                        autocomplete="grand_total"
-                                        autofocus
-                                    />
-                                </td>
-                            </tr>
-                        </table>
-
-                        <div class="form-group d-flex pt-4">
-                            <button type="submit" id="btn_save_data" class="btn btn-primary">Save</button>
+                                </div>
+                                <div class="col-md-1" style="justify-content: flex-end; padding: 0;margin: auto 0;">
+                                    <label class="float-right" style="margin: auto 0;"> %</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12 d-flex mt-4" style="justify-content: flex-end;">
+                            <div class="col-md-10 row" style="justify-content: flex-end;padding-right: 2rem;">
+                                <label for="sum_total" style="margin: auto 0;"><span>Total</span></label>
+                            </div>
+                            <div class="col-md-2" style="justify-content: flex-end; padding: 0;">
+                                <input
+                                    id="sum_total"
+                                    name="total_total"
+                                    type="number"
+                                    class="form-control text-right"
+                                    value="{{ old('sub_total') }}"
+                                    autocomplete="total"
+                                    autofocus
+                                />
+                            </div>
+                        </div>
+                        {{--                        <div class="col-md-12 d-flex mt-4" style="justify-content: flex-end;"> --}}
+                        {{--                            <div class="col-md-10 row" style="justify-content: flex-end;padding-right: 2rem;">--}}
+                        {{--                                <label for="total_vat" style="margin: auto 0;"><span>Vat</span></label>--}}
+                        {{--                            </div>--}}
+                        {{--                            <div class="col-md-2 d-flex" style="justify-content: flex-end; padding: 0;margin: auto 0;">--}}
+                        {{--                                <div class="col-md-7" style="justify-content: flex-end; padding: 0 1rem 0 0;">--}}
+                        {{--                                    <input--}}
+                        {{--                                        id="total_vat"--}}
+                        {{--                                        name="total_vat"--}}
+                        {{--                                        type="number"--}}
+                        {{--                                        class="form-control text-right"--}}
+                        {{--                                        value="{{ old('vat') }}"--}}
+                        {{--                                        autocomplete="vat"--}}
+                        {{--                                        autofocus--}}
+                        {{--                                    />--}}
+                        {{--                                </div>--}}
+                        {{--                                <div class="col-md-1" style="justify-content: flex-end; padding: 0;margin: auto 0;">--}}
+                        {{--                                    <label class="float-right" style="margin: auto 0;"> %</label>--}}
+                        {{--                                </div>--}}
+                        {{--                            </div>--}}
+                        {{--                        </div>--}}
+                        <div class="col-md-12 d-flex mt-4" style="justify-content: flex-end;">
+                            <div class="col-md-10 row" style="justify-content: flex-end;padding-right: 2rem;">
+                                <label for="grand_total" style="margin: auto 0;"><span>Grand Total</span></label>
+                            </div>
+                            <div class="col-md-2" style="justify-content: flex-end; padding: 0;">
+                                <input
+                                    id="grand_total"
+                                    name="grand_total"
+                                    type="number"
+                                    class="form-control text-right"
+                                    value="{{ old('grand_total') }}"
+                                    autocomplete="grand_total"
+                                    autofocus
+                                />
+                            </div>
+                        </div>
+                        <div class="col-md-12 d-flex pt-4">
+                            <button type="submit" id="btn_save_data" class="btn btn-primary"><i class="fa fa-save"></i> Save</button>
                         </div>
                     </div>
                 </form>
@@ -418,7 +468,7 @@
     }
 </script>
 <script>
-    let amount, sub_total,qty,discount,vat,vat_per,total;
+    let amount, sub_total,qty,discount,vat,vat_per,total,net_total;
     let sum_sub,sum_qty,sum_amount,sum_discount,sum_dis_per,sum_total,sum_vat,sum_grand_total;
     $(document).ready(function(){
         qty=$("#qty");
@@ -433,7 +483,6 @@
             let $div = $(this).closest('.invoice-detail');
             calculate_amount($div);
             calculate_total();
-
         });
 
         vat=$("#vat");
@@ -443,12 +492,25 @@
             calculate_total();
         });
 
+        $(window).keydown(function(event){
+            let isSaveFocus = $('#btn_save_data').is(':focus');
+            let activeElement = document.activeElement;
+            console.log(activeElement.id);
+            if(event.keyCode == 13 && isSaveFocus==false) {
+                event.preventDefault();
+                return false;
+            }
+            if (event.keyCode == 9 && activeElement.id=="discount") {
+                return addInvoiceDetail();
+            }
+        });
+
 
         function calculate_amount($div) {
             qty=isNaN(parseFloat($div.find("#qty").val())) ? 0 : parseFloat($div.find("#qty").val());
             amount=isNaN(parseFloat($div.find("#amount").val())) ? 0 : parseFloat($div.find("#amount").val());
             discount=isNaN(parseFloat($div.find("#discount").val())) ? 0 : parseFloat($div.find("#discount").val());
-            sub_total=qty*amount-discount;
+            sub_total=qty*amount*(1-discount/100);
             vat_per=isNaN(parseFloat($div.find("#vat").val())) ? 0 : parseFloat($div.find("#vat").val());
             total = parseFloat(sub_total)*(1+vat_per/100);
             $div.find("#total").val(total.toFixed(2));
@@ -465,19 +527,21 @@
                 sum_qty = isNaN(parseFloat($(this).find('#qty').val())) ? 0 : parseFloat($(this).find('#qty').val());
                 sum_amount = isNaN(parseFloat($(this).find('#amount').val())) ? 0 : parseFloat($(this).find('#amount').val());
                 discount = isNaN(parseFloat($(this).find('#discount').val())) ? 0 : parseFloat($(this).find('#discount').val());
+                net_total = isNaN(parseFloat($(this).find('#total').val())) ? 0 : parseFloat($(this).find('#total').val());
+
                 if(sum_qty && sum_amount){
                     sum_sub += (sum_qty*sum_amount);
                 }
                 if (discount){
-                    sum_discount += discount;
+                    sum_discount += sum_qty*sum_amount*discount/100;
                 }
             });
             if (sum_discount > 0){
                 sum_dis_per = sum_discount/sum_sub*100;
             }
             sum_total = sum_sub - sum_discount;
-            sum_vat = 13;
-            sum_grand_total = sum_total*1.13;
+            sum_vat = 0;
+            sum_grand_total = sum_total*(1+sum_vat/100);
             $('#sub_total').val(sum_sub);
             $('#total_discount').val(sum_discount);
             $('#dis_per').val(sum_dis_per.toFixed(2));
@@ -488,14 +552,19 @@
     });
 
     console.clear();
+    const addInvoiceDetail = () => {
+        let $invoiceDetail = $('.invoice-detail').first().clone(true); // if you want to clone events also, add true in clone(true)
+        $invoiceDetail.find('input').val('');
+        $('.invoice-detail').last().after($invoiceDetail);
+        $('.invoice-detail #item').last().focus();
+        // console.log($('.invoice-detail #item').last());
+    }
     $('#addDetail').click(function (e) {
         e.preventDefault();
-        let $invoiceDetail = $('.invoice-detail').first().clone(true); // if you want to clone events also, add true in clone(true)
-        //$invoiceDetail.find('label').remove();
-        $invoiceDetail.find('input').val('');
-        // $invoiceDetail.find('select').val('');
-        $('.invoice-detail').last().after($invoiceDetail);
-        console.log(invoiceDetail);
+        // let $invoiceDetail = $('.invoice-detail').first().clone(true); // if you want to clone events also, add true in clone(true)
+        // $invoiceDetail.find('input').val('');
+        // $('.invoice-detail').last().after($invoiceDetail);
+        addInvoiceDetail();
     });
     $('#removeDetail').click(function (e) {
         e.preventDefault();

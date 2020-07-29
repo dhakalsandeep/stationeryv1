@@ -22,4 +22,9 @@ class PurchaseMaster extends Model
     {
         return $this->hasMany(PurchaseDetail::class,'purchase_masters_id','id');
     }
+
+    public function purchase_return_masters()
+    {
+        return $this->hasMany(PurchaseReturnMaster::class,'purchase_master_id','id');
+    }
 }

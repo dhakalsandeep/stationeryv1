@@ -10,7 +10,7 @@ class Publisher extends Model
 
     public function countries()
     {
-        return $this->hasOne(Countries::class);
+        return $this->hasOne(Country::class);
     }
 
     public function user()

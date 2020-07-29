@@ -16,6 +16,7 @@ class DatabaseSeeder extends Seeder
             DepartmentsTableSeeder::class,
             ItemsTypesTableSeeder::class,
             FiscalYearsTableSeeder::class,
+            CountriesTableSeeder::class,
         ]);
     }
 }

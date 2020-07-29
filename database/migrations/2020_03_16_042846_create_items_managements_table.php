@@ -24,6 +24,7 @@ class CreateItemsManagementsTable extends Migration
             $table->integer('purchase_details_id');
             $table->integer('users_id');
             $table->integer('company_infos_id');
+            $table->integer('status')->default(1);
             $table->timestamps();
 
             $table->index('purchase_details_id');

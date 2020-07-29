@@ -16,6 +16,7 @@ class CreateItemsTypesTable extends Migration
         Schema::create('items_types', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('type');
+            $table->integer('status')->default(1);
             $table->timestamps();
         });
     }

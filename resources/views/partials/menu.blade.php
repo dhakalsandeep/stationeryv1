@@ -8,6 +8,12 @@
                     {{ trans('global.dashboard') }}
                 </a>
             </li>
+{{--            <li class="nav-item" style="display: none;">--}}
+{{--                <a href="{{ route("calender") }}" class="nav-link">--}}
+{{--                    <i class="nav-icon fas fa-tachometer-alt"></i>--}}
+{{--                    {{ "Calender" }}--}}
+{{--                </a>--}}
+{{--            </li>--}}
             @can('user_management_access')
                 <li class="nav-item nav-dropdown">
                     <a class="nav-link  nav-dropdown-toggle">

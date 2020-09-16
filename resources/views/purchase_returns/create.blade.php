@@ -23,7 +23,7 @@
                                style="width: 80px;"
                                value="{{ $purchase_master->id }}"
                                readonly
-                               autocomplete="purchase_master_id" hidden autofocus>
+                               autocomplete="purchase_master_id" hidden>
                         @error('purchase_master_id')
                         <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
@@ -40,7 +40,7 @@
                                    style="width: 80px;"
                                    value="{{ $fiscal_year->fiscal_year }}"
                                    readonly
-                                   autocomplete="fiscal_year" autofocus>
+                                   autocomplete="fiscal_year">
                             @error('fiscal_year')
                             <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
@@ -56,7 +56,7 @@
                                        class="form-control"
                                        style="text-transform:uppercase"
                                        value="{{ $purchase_master->supplier->name }}"
-                                       autocomplete="supplier" readonly autofocus>
+                                       autocomplete="supplier" readonly>
                                 @error('supplier')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
@@ -72,7 +72,7 @@
                                        class="form-control"
                                        style="text-transform:uppercase"
                                        value="{{ $purchase_master->supplier_bill_no }}"
-                                       autocomplete="supplier_bill_no" readonly autofocus>
+                                       autocomplete="supplier_bill_no" readonly>
                                 @error('supplier_bill_no')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
@@ -87,7 +87,7 @@
                                        type="text"
                                        class="form-control"
                                        value="{{ $purchase_master->supplier_bill_date }}"
-                                       autocomplete="supplier_bill_date" readonly autofocus>
+                                       autocomplete="supplier_bill_date" readonly>
                                 @error('supplier_bill_date')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
@@ -101,7 +101,7 @@
                                        type="text"
                                        class="form-control"
                                        value="{{ $purchase_master->received_date }}"
-                                       autocomplete="received_date" readonly autofocus>
+                                       autocomplete="received_date" readonly>
                                 @error('received_date')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
@@ -119,7 +119,7 @@
                                        class="form-control"
                                        value="{{ $purchase_master->purchase_no }}"
                                        readonly
-                                       autocomplete="purchase_no" autofocus>
+                                       autocomplete="purchase_no">
                                 @error('purchase_no')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
@@ -134,7 +134,7 @@
                                        value="{{ $purchase_return_no }}"
                                        class="form-control"
                                        readonly
-                                       autocomplete="return_no" autofocus>
+                                       autocomplete="return_no">
                                 @error('return_no')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
@@ -149,7 +149,7 @@
                                        type="text"
                                        class="form-control"
                                        value="{{ old('return_date') }}"
-                                       autocomplete="return_date" autofocus>
+                                       autocomplete="return_date">
                                 @error('return_date')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
@@ -217,8 +217,7 @@
                                            name="purchase_detail_id[]"
                                            type="text"
                                            class="form-control"
-                                           value="{{ $purchase_detail->id }}"
-                                           autocomplete="edition" >
+                                           value="{{ $purchase_detail->id }}">
                                     @error('edition')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -243,7 +242,7 @@
                                            type="text"
                                            class="form-control"
                                            value="{{ $purchase_detail->edition }}"
-                                           autocomplete="edition" readonly autofocus>
+                                           autocomplete="edition" readonly>
                                     @error('edition')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -257,7 +256,7 @@
                                            type="number"
                                            class="form-control text-right amount"
                                            value="{{ $purchase_detail->amount }}"
-                                           autocomplete="amount" readonly autofocus>
+                                           autocomplete="amount" readonly>
                                     @error('amount')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -288,7 +287,7 @@
                                            type="number"
                                            class="form-control text-right discount"
                                            value="{{ $purchase_detail->dis_per }}"
-                                           autocomplete="discount" readonly autofocus>
+                                           autocomplete="discount" readonly>
                                     @error('discount')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -302,7 +301,7 @@
                                            type="number"
                                            class="form-control text-right vat"
                                            value="{{ 0 }}"
-                                           autocomplete="vat" autofocus>
+                                           autocomplete="vat">
                                     @error('vat')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -317,7 +316,7 @@
                                            step="0.01"
                                            class="form-control text-right total"
                                            value="{{ $purchase_detail->total }}"
-                                           autocomplete="total" readonly autofocus>
+                                           autocomplete="total" readonly>
                                     @error('total')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -345,7 +344,7 @@
                                     class="form-control text-right"
                                     value="{{ old('sub_total') }}"
                                     autocomplete="sub_total"
-                                    autofocus
+
                                 />
                             </div>
                         </div>
@@ -362,7 +361,7 @@
                                         class="form-control text-right"
                                         value="{{ old('discount') }}"
                                         autocomplete="sub_total"
-                                        autofocus
+
                                     />
                                 </div>
                                 <div class="col-md-4" style="justify-content: flex-end; padding: 0;">
@@ -374,7 +373,7 @@
                                         class="form-control"
                                         value="{{ old('dis_per') }}"
                                         autocomplete="dis_per"
-                                        autofocus
+
                                     />
                                 </div>
                                 <div class="col-md-1" style="justify-content: flex-end; padding: 0;margin: auto 0;">
@@ -394,7 +393,7 @@
                                     class="form-control text-right"
                                     value="{{ old('sub_total') }}"
                                     autocomplete="total"
-                                    autofocus
+
                                 />
                             </div>
                         </div>
@@ -410,7 +409,7 @@
                                     class="form-control text-right"
                                     value="{{ old('grand_total') }}"
                                     autocomplete="grand_total"
-                                    autofocus
+
                                 />
                             </div>
                         </div>

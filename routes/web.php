@@ -4,6 +4,10 @@ Route::redirect('/', '/login');
 
 Route::redirect('/home', '/admin');
 
+//Route::get('/calender',function () {
+//    return view('calender');
+//})->name('calender');
+
 Auth::routes(['register' => false]);
 
 Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'middleware' => ['auth']], function () {
@@ -31,6 +35,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
 Route::get('/item','ItemsController@index')->name('item.index');
 Route::get('/item/create', 'ItemsController@create')->name('item.create');
 Route::get('/item/{item}/edit', 'ItemsController@edit')->name('item.edit');
+Route::get('/item/fetch-item', 'ItemsController@fetch_items')->name('item.fetch.item');
 Route::post('/item', 'ItemsController@store')->name('item.store');
 Route::post('/item/{item}', 'ItemsController@update')->name('item.update');
 

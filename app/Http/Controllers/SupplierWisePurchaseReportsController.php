@@ -23,7 +23,7 @@ class SupplierWisePurchaseReportsController extends Controller
 
     public function fetch_data(Request $request)
     {
-        if($request->ajax())
+//        if($request->ajax())
         {
             if($request->from_date != '' && $request->to_date != '')
             {
@@ -42,29 +42,31 @@ class SupplierWisePurchaseReportsController extends Controller
 
     public function get_data($from_date, $to_date)
     {
-        $data_return = DB::table('purchase_masters as pm')
-            ->join('purchase_details as pd', 'pm.id', '=', 'pd.purchase_masters_id')
-            ->join('suppliers as sp', 'pm.suppliers_id', '=', 'sp.id')
-            ->select(DB::raw('sp.id,sp.name,0 as amount,sum(pd.total_amount) as return_amount'))
-            ->whereBetween('received_date_ad', [$from_date, $to_date])
-            ->where('pm.company_infos_id',auth()->user()->company_infos_id)
+        $data_return = DB::table('purchase_return_masters as prm')
+            ->join('purchase_return_details as prd', 'prm.id', '=', 'prd.purchase_return_master_id')
+            ->join('purchase_masters as pm2', 'prm.purchase_master_id', '=', 'pm2.id')
+            ->join('suppliers as sp', 'pm2.suppliers_id', '=', 'sp.id')
+            ->select(DB::raw('sp.id,sp.name,0 as amount,sum(prd.total_amount) as return_amount'))
+            ->whereBetween('prm.return_date_ad', [$from_date, $to_date])
+            ->where('pm2.company_infos_id',auth()->user()->company_infos_id)
             ->groupBy('sp.id','sp.name');
 
         $sub = DB::table('purchase_masters as pm')
             ->join('purchase_details as pd', 'pm.id', '=', 'pd.purchase_masters_id')
             ->join('suppliers as sp', 'pm.suppliers_id', '=', 'sp.id')
             ->select(DB::raw('sp.id,sp.name,sum(pd.total_amount) amount,0 as return_amount'))
-            ->whereBetween('received_date_ad', [$from_date, $to_date])
+            ->whereBetween('pm.received_date_ad', [$from_date, $to_date])
             ->where('pm.company_infos_id',auth()->user()->company_infos_id)
             ->groupBy('sp.id','sp.name')
             ->union($data_return);
 
-        return  $data = DB::table(DB::raw("({$sub->toSql()}) as sub"))
+        return $data = DB::table(DB::raw("({$sub->toSql()}) as sub"))
             ->mergeBindings($sub)
             ->selectRaw('id, name, round(sum(amount),2) as amount, round(sum(return_amount),2) as return_amount,
-            round(sum(amount)-sum(return_amount)) as total')
+            round(sum(amount)-sum(return_amount),2) as total')
             ->groupBy('id','name')
             ->get();
+//        dd($data->toSql());
     }
 
     public function get_details_data(Request $request)
@@ -72,23 +74,42 @@ class SupplierWisePurchaseReportsController extends Controller
         $supplier_id = (int)$request->supplier_id;
         $from_date = $request->from_date;
         $to_date = $request->to_date;
-//        dd($from_date, $to_date,$supplier_id);
-         $data = DB::table('purchase_masters as pm')
+        $data_purchase_return = DB::table('purchase_return_masters as prm')
+            ->join('purchase_masters as pm', 'prm.purchase_master_id','=','pm.id')
+            ->join('purchase_return_details as prd', 'prm.id', '=', 'prd.purchase_return_master_id')
+            ->join('items as it', 'it.id', '=', 'prd.items_id')
+            ->join('suppliers as sp', 'pm.suppliers_id', '=', 'sp.id')
+            ->selectRaw('"r" as flag, prm.return_date_ad as received_date,prm.return_no as purchase_no,
+            pm.supplier_bill_no,it.code,it.name as items_name,prd.edition,
+            prd.return_qty as qty,prd.amount as rate,
+            prd.dis_per,prd.vat,prd.total_amount,prm.created_at')
+            ->whereBetween('return_date_ad', [$from_date, $to_date])
+            ->where([
+                ['pm.company_infos_id',auth()->user()->company_infos_id],
+                ['sp.id','=',$supplier_id]
+            ]);
+        $sub = DB::table('purchase_masters as pm')
             ->join('purchase_details as pd', 'pm.id', '=', 'pd.purchase_masters_id')
             ->join('items as it', 'it.id', '=', 'pd.items_id')
             ->join('suppliers as sp', 'pm.suppliers_id', '=', 'sp.id')
-            ->select('pm.received_date_ad as received_date', 'pm.purchase_no',
-                'pm.supplier_bill_no','it.code','it.name as items_name','pd.edition',
-                'pd.qty','pd.amount as rate','pd.dis_per','pd.vat',
-                'pd.total_amount')
+            ->selectRaw('"p" as flag, pm.received_date_ad as received_date, pm.purchase_no,
+                pm.supplier_bill_no,it.code,it.name as items_name,pd.edition,
+                pd.qty,pd.amount as rate,pd.dis_per,pd.vat,
+                pd.total_amount,pm.created_at')
             ->whereBetween('received_date_ad', [$from_date, $to_date])
             ->where([
                 ['pm.company_infos_id',auth()->user()->company_infos_id],
                 ['sp.id','=',$supplier_id]
                 ])
+            ->union($data_purchase_return);
+
+        $data = DB::table(DB::raw("({$sub->toSql()}) as sub"))
+            ->mergeBindings($sub)
+            ->selectRaw('flag,received_date,purchase_no,supplier_bill_no,code,items_name,
+            edition,qty,rate,dis_per,vat,total_amount')
+            ->orderByRaw('flag, created_at')
             ->get();
 
-//         dd(json_encode($data));
          return json_encode($data);
     }
 

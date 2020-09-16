@@ -19,13 +19,33 @@ class ItemsController extends Controller
     {
         //$items = Item::where('users_id',auth()->user()->id)->latest()->paginate(20);
 //        $items = Item::where('company_infos_id',auth()->user()->company_infos_id)->get();
-        $items = DB::table('items as i')
-            ->join('publishers as p','i.publishers_id','=','p.id')
-            ->join('items_types as it','i.items_types_id','=','it.id')
-            ->selectRaw('i.id, i.code, i.name,it.type, i.ro_level, p.name as publisher_name,i.author')
-            ->get();
+
+//        dd($items);
+        $items = $this->get_items();
 //        dd($items);
         return view('items.index',compact('items'));
+    }
+
+    public function fetch_items(Request $request)
+    {
+        $search_str = $request->input('query');
+        $items = $this->get_items($search_str);
+        return response()->json($items);
+    }
+
+    public function get_items($search_str = '')
+    {
+//        dd($query);
+        return $items = DB::table('items as i')
+            ->leftJoin('publishers as p','i.publishers_id','=','p.id')
+            ->leftJoin('items_types as it','i.items_types_id','=','it.id')
+            ->selectRaw('i.id, i.code, i.name,it.type, i.ro_level, p.name as publisher_name,i.author')
+            ->where('i.company_infos_id',auth()->user()->company_infos_id)
+            ->when($search_str, function ($query, $search_str) {
+                return $query->where("i.name","LIKE","%{$search_str}%");
+            })
+            ->get();
+
     }
 
     public function edit(Item $item)

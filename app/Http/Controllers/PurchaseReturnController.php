@@ -42,7 +42,7 @@ class PurchaseReturnController extends Controller
                 ['pd.company_infos_id',auth()->user()->company_infos_id],
                 ['id.to_dep_id',1],
             ])
-            ->groupByRaw('pd.id, pd.items_id, pd.edition,pd.discount,pd.dis_per,pd.qty,prd.return_qty,pd.vat');
+            ->groupByRaw('pd.id, pd.items_id, pd.edition,pd.discount,pd.dis_per,pd.qty,prd.return_qty,pd.vat,pd.amount');
 
         $purchase_details = DB::table(DB::raw("({$sub->toSql()}) as sub"))
             ->mergeBindings($sub)

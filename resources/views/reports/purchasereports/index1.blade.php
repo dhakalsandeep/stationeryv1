@@ -133,37 +133,21 @@
                         $('#total_records').text(data.length);
                         for(var i = 0; i < data.length; i++)
                         {
-                        //     output = `<tr>
-                        //     <td></td>
-                        //     <td>${data[i].received_date}</td>
-                        //     <td>${data[i].purchase_no}</td>
-                        //     <td>${data[i].supplier_bill_no}</td>
-                        //     <td>${data[i].code}</td>
-                        //     <td>${data[i].items_name}</td>
-                        //     <td>${data[i].type}</td>
-                        //     <td>${data[i].supplier_name}</td>
-                        //     <td>${data[i].qty}</td>
-                        //     <td>${data[i].rate}</td>
-                        //     <td>${data[i].dis_per}</td>
-                        //     <td>${data[i].vat}</td>
-                        //     <td>${data[i].total_amount}</td>
-                        // </tr>`;
-
-                        output += '<tr>';
-                        // output += '<td></td>';
-                        output += '<td>' + data[i].received_date + '</td>';
-                        output += '<td>' + data[i].purchase_no + '</td>';
-                        output += '<td>' + data[i].supplier_bill_no + '</td>';
-                        output += '<td>' + data[i].code + '</td>';
-                        output += '<td>' + data[i].items_name + '</td>';
-                        output += '<td>' + data[i].type + '</td>';
-                        output += '<td>' + data[i].supplier_name + '</td>';
-                        output += '<td>' + data[i].qty + '</td>';
-                        output += '<td>' + data[i].rate + '</td>';
-                        output += '<td>' + data[i].dis_per + '</td>';
-                        output += '<td>' + data[i].vat + '</td>';
-                        output += '<td>' + data[i].total_amount + '</td>';
-                        output += '</tr>';
+                            output = `<tr>
+                            <td></td>
+                            <td>${data[i].received_date}</td>
+                            <td>${data[i].purchase_no}</td>
+                            <td>${data[i].supplier_bill_no}</td>
+                            <td>${data[i].code}</td>
+                            <td>${data[i].items_name}</td>
+                            <td>${data[i].type}</td>
+                            <td>${data[i].supplier_name}</td>
+                            <td>${data[i].qty}</td>
+                            <td>${data[i].rate}</td>
+                            <td>${data[i].dis_per}</td>
+                            <td>${data[i].vat}</td>
+                            <td>${data[i].total_amount}</td>
+                        </tr>`;
                         console.log(output);
                         }
                         $('tbody').html(output);

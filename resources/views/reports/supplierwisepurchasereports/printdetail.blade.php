@@ -102,9 +102,27 @@
 
                 xhr.onload = function () {
                     if (this.status == 200) {
+                        let printPurchase, printReturn;
+                        printPurchase = false;
+                        printReturn = false;
                         let totolAmount = 0;
                         let data = JSON.parse(this.responseText);
                         for (let i in data) {
+                            console.log(data[i].flag);
+                            if (!printPurchase && data[i].flag === "p"){
+                                output += `<tr>
+                                                <td colspan="11">Purchase</td>
+                                           </tr>`;
+                            }
+
+                            if (!printReturn && data[i].flag === "r") {
+                                printReturn = true;
+                                output += `<tr>
+                                        <td colspan="11">Return</td>
+                                   </tr>`;
+                            }
+                            printPurchase = true;
+
                             output += `<tr>
                                        <td style="text-align: center;">${data[i].received_date}</td>
                                        <td style="text-align: center;">${data[i].purchase_no}</td>
@@ -118,7 +136,8 @@
                                        <td style="text-align: right;">${data[i].vat}</td>
                                        <td style="text-align: right;">${data[i].total_amount}</td>
                                        </tr>`;
-                            totolAmount += data[i].total_amount;
+
+                            totolAmount +=  (data[i].flag === "p") ? data[i].total_amount : -(data[i].total_amount);
                         }
 
                         output += `<tr>

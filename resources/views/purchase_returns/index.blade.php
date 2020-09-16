@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 @section('page_header')
-Purchases
+Purchase Return
 @stop
 {{--@section('content')--}}
 {{--<div class="container-fluid m-2">--}}

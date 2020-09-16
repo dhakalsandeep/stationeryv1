@@ -7,7 +7,7 @@ use Faker\Generator as Faker;
 
 $factory->define(\App\Item::class, function (Faker $faker) {
     return [
-        'code' => substr($faker->word,6),
+        'code' => substr($faker->word,1,6),
         'name' => $faker->streetName,
         'ro_level'=> $faker->numberBetween(50,100),
         'isbn' => (string)$faker->numberBetween(9900000000,9990000000),

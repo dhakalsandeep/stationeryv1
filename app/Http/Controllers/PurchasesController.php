@@ -33,8 +33,7 @@ class PurchasesController extends Controller
         $suppliers = Supplier::where('company_infos_id',auth()->user()->company_infos_id)->get();
         $fiscal_year = FiscalYear::where('status',1)->first();
         $purchase_no = $this->get_new_purchase_no();
-        $items = Item::where('users_id',auth()->user()->id)->get();
-        return view('purchases.create',compact('suppliers','items','fiscal_year','purchase_no'));
+        return view('purchases.create',compact('suppliers','fiscal_year','purchase_no'));
     }
 
     public function get_new_purchase_no(){
@@ -83,7 +82,7 @@ class PurchasesController extends Controller
         else
             $request['is_payment_done'] = 'Y';
 
-//        dd($request->toArray());
+//        dd($request->all());
         $fiscal_year = FiscalYear::where('status',1)->first()->fiscal_year;
 
         $nep_to_eng = new NepaliToEnglishDateConverter();
@@ -129,7 +128,9 @@ class PurchasesController extends Controller
             //return redirect(route('publisher.index'));
             // save master and get id then
 
-            $items = $request->get('item');
+//            dd($request->all());
+
+            $items = $request->get('item_id');
             $editions = $request->get('edition');
             $amounts = $request->get('amount');
             $qtys = $request->get('qty');
@@ -156,9 +157,7 @@ class PurchasesController extends Controller
                 }
                 $detail['vat'] = $vats[$index];
                 $detail['total'] = $amounts[$index]*$qtys[$index]*(1-$discounts[$index]/100)*(1+$vats[$index]/100);
-//                dd($detail);
-                // create detail
-
+//                dd($detail);$is_selecteds
                 $purchase_detail = new PurchaseDetail();
                 $purchase_detail->purchase_masters_id = $detail['purchase_master_id'];
                 $purchase_detail->purchase_no = $detail['purchase_no'];
@@ -201,10 +200,8 @@ class PurchasesController extends Controller
         } catch (Throwable $e) {
             DB::rollback();
             report($e);
-
             return false;
         }
-
     }
 
     public function print_purchase($id)
@@ -214,7 +211,6 @@ class PurchasesController extends Controller
         $company_info = auth()->user()->company_info;
         //dd($purchase_master);
         return view('purchases.print1',compact('purchase_master','purchase_details','company_info'));
-
     }
 
 }
